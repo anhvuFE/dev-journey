@@ -6,21 +6,25 @@ export default async function ChaptersSection() {
   const t = await getTranslations("chapters");
 
   return (
-    <section id="chapters" className="relative mx-auto max-w-6xl px-5 py-28">
-      <div className="mb-14 text-center">
-        <p className="mb-3 font-mono text-xs uppercase tracking-[0.3em] text-muted-foreground">
-          {t("sectionKicker")}
-        </p>
-        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+    <section id="chapters" className="mx-auto max-w-6xl px-5 py-20 md:py-28">
+      <div className="flex items-baseline justify-between gap-4">
+        <h2 className="text-3xl font-extrabold uppercase tracking-tight sm:text-5xl">
           {t("sectionTitle")}
         </h2>
+        <span className="shrink-0 font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
+          {t("sectionKicker")} · 07
+        </span>
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="rule mt-6" />
+
+      <ol>
         {chapters.map((chapter, i) => (
-          <ChapterCard key={chapter.id} chapter={chapter} index={i} />
+          <li key={chapter.id}>
+            <ChapterCard chapter={chapter} index={i} />
+          </li>
         ))}
-      </div>
+      </ol>
     </section>
   );
 }

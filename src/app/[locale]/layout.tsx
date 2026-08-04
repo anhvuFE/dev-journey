@@ -6,12 +6,11 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import "../globals.css";
 
-// Font sans có hỗ trợ tiếng Việt đầy đủ (dấu đẹp, hiện đại).
-// Gắn đúng vào biến --font-sans mà theme của Tailwind/shadcn đang dùng.
+// Sans grotesk (chất modern) — hỗ trợ tiếng Việt đầy đủ.
 const fontSans = Be_Vietnam_Pro({
   variable: "--font-sans",
   subsets: ["latin", "vietnamese"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["400", "500", "600", "700", "800", "900"],
   display: "swap",
 });
 const fontMono = Geist_Mono({
@@ -55,7 +54,7 @@ export default async function LocaleLayout({
     <html
       lang={locale}
       data-scroll-behavior="smooth"
-      className={`${fontSans.variable} ${fontMono.variable} dark h-full antialiased`}
+      className={`${fontSans.variable} ${fontMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <NextIntlClientProvider>{children}</NextIntlClientProvider>

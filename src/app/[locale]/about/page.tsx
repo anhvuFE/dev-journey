@@ -22,7 +22,7 @@ const copy = {
       { n: "60+", l: "dự án" },
       { n: "7.000+", l: "commit" },
       { n: "8+", l: "ngôn ngữ" },
-      { n: "2024→nay", l: "hành trình" },
+      { n: "2022→nay", l: "hành trình" },
     ],
   },
   en: {
@@ -38,7 +38,7 @@ const copy = {
       { n: "60+", l: "projects" },
       { n: "7,000+", l: "commits" },
       { n: "8+", l: "languages" },
-      { n: "2024→now", l: "the journey" },
+      { n: "2022→now", l: "the journey" },
     ],
   },
 } satisfies Record<Locale, unknown>;

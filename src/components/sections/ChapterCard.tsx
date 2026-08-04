@@ -1,8 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useLocale, useTranslations } from "next-intl";
-import { ArrowUpRight } from "lucide-react";
+import { useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import type { Chapter } from "@/data/chapters";
 
@@ -14,71 +13,43 @@ export default function ChapterCard({
   index: number;
 }) {
   const locale = useLocale() as "vi" | "en";
-  const t = useTranslations("chapters");
 
   return (
     <motion.div
       data-theme={chapter.theme.key}
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.6, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.5, delay: index * 0.04, ease: [0.22, 1, 0.36, 1] }}
     >
-      <Link href={`/chapters/${chapter.id}`} className="group block">
-        <div
-          className="grain relative overflow-hidden rounded-3xl border border-white/10 p-8 transition-transform duration-300 group-hover:-translate-y-1"
-          style={{
-            background: `radial-gradient(120% 120% at 0% 0%, color-mix(in oklab, var(--c-accent) 18%, var(--c-bg)) 0%, var(--c-bg) 60%)`,
-            color: "var(--c-fg)",
-          }}
-        >
-          <div
-            className="glow-ring absolute -right-16 -top-16 h-40 w-40 rounded-full opacity-60 blur-2xl"
-            style={{ background: "var(--c-glow)" }}
-          />
-          <div className="relative flex items-start justify-between">
-            <span
-              className="font-mono text-5xl font-bold opacity-30"
-              style={{ color: "var(--c-accent)" }}
-            >
-              {String(chapter.order).padStart(2, "0")}
-            </span>
-            <ArrowUpRight
-              className="h-6 w-6 opacity-40 transition-all group-hover:rotate-45 group-hover:opacity-100"
-              style={{ color: "var(--c-accent)" }}
-            />
-          </div>
+      <Link
+        href={`/chapters/${chapter.id}`}
+        className="group flex items-center gap-5 border-b border-border py-8 transition-[padding] duration-300 hover:pl-3 md:gap-10"
+      >
+        <span className="w-10 shrink-0 font-mono text-sm tabular-nums text-accent-c md:w-16 md:text-base">
+          {String(chapter.order).padStart(2, "0")}
+        </span>
 
-          <h3 className="glow-text relative mt-6 text-2xl font-bold tracking-tight">
+        <div className="flex-1">
+          <h3 className="text-2xl font-extrabold uppercase leading-none tracking-tight transition-colors duration-200 group-hover:text-accent-c md:text-5xl">
             {chapter.title[locale]}
           </h3>
-          <p
-            className="relative mt-2 text-sm"
-            style={{ color: "var(--c-muted)" }}
-          >
+          <p className="mt-3 max-w-xl text-sm text-muted-foreground md:text-[15px]">
             {chapter.tagline[locale]}
           </p>
-
-          <div className="relative mt-6 flex flex-wrap gap-2">
+          <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground/70">
             {chapter.repos.slice(0, 4).map((r) => (
-              <span
-                key={r.name}
-                className="rounded-full border border-white/15 px-2.5 py-1 text-[11px]"
-                style={{ color: "var(--c-muted)" }}
-              >
-                {r.name}
-              </span>
+              <span key={r.name}>{r.name}</span>
             ))}
           </div>
-
-          <span
-            className="relative mt-6 inline-flex items-center gap-1 text-sm font-medium"
-            style={{ color: "var(--c-accent)" }}
-          >
-            {t("read")}
-            <ArrowUpRight className="h-4 w-4" />
-          </span>
         </div>
+
+        <span
+          aria-hidden
+          className="shrink-0 text-2xl text-accent-c opacity-25 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100 md:text-3xl"
+        >
+          →
+        </span>
       </Link>
     </motion.div>
   );

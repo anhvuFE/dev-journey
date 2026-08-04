@@ -1,111 +1,87 @@
 "use client";
 
-import { useRef } from "react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { ArrowDown } from "lucide-react";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Scene3D from "@/components/three/Scene3D";
-
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+import MagneticButton from "@/components/MagneticButton";
+import { profile } from "@/data/profile";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function Hero() {
   const t = useTranslations("hero");
-  const sectionRef = useRef<HTMLElement>(null);
-  const bgRef = useRef<HTMLDivElement>(null);
-
-  useGSAP(
-    () => {
-      const reduce = window.matchMedia(
-        "(prefers-reduced-motion: reduce)",
-      ).matches;
-      if (reduce) return;
-      gsap.to(bgRef.current, {
-        yPercent: 25,
-        opacity: 0.3,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-    },
-    { scope: sectionRef },
-  );
+  const words = t("title").split(" ");
+  const ticker = [...profile.skills, ...profile.skills];
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative flex min-h-[100svh] items-center justify-center overflow-hidden"
-    >
-      {/* Aurora nền mềm (mờ, không lấn nội dung) */}
-      <div className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(55%_45%_at_50%_30%,rgba(99,102,241,0.16),transparent_70%)]" />
-      <div className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(40%_40%_at_82%_18%,rgba(168,85,247,0.12),transparent_70%)]" />
+    <section className="relative min-h-[100svh] overflow-hidden">
+      <div className="mx-auto grid min-h-[100svh] max-w-6xl grid-cols-1 items-center gap-4 px-5 pb-24 pt-24 md:grid-cols-12 md:gap-8 md:pb-16">
+        {/* Cột chữ */}
+        <div className="order-2 md:order-1 md:col-span-7">
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="mb-5 font-mono text-xs uppercase tracking-[0.35em] text-primary"
+          >
+            // {t("kicker")}
+          </motion.p>
 
-      {/* Lớp 3D tinh tế (wireframe + sparkles + sao) */}
-      <div ref={bgRef} className="absolute inset-0 -z-10">
-        <Scene3D accent="#818cf8" glow="#a855f7" />
+          <h1 className="text-[11vw] font-extrabold uppercase leading-[1.08] tracking-[-0.01em] sm:text-6xl md:text-7xl">
+            {words.map((w, i) => (
+              <span key={i} className="mr-[0.22em] inline-block">
+                <motion.span
+                  className="inline-block will-change-transform"
+                  initial={{ y: 44, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.7, delay: 0.15 + i * 0.06, ease }}
+                >
+                  {w}
+                </motion.span>
+              </span>
+            ))}
+          </h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.6, ease }}
+            className="mt-8 max-w-md text-base text-muted-foreground sm:text-lg"
+          >
+            {t("subtitle")}
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.75, ease }}
+          >
+            <MagneticButton
+              href="#chapters"
+              className="mt-9 inline-flex items-center gap-3 bg-primary px-8 py-4 text-sm font-bold uppercase tracking-widest text-primary-foreground"
+            >
+              {t("cta")} <span aria-hidden>→</span>
+            </MagneticButton>
+          </motion.div>
+        </div>
+
+        {/* Cột Rubik 3D — tách riêng, không chồng chữ */}
+        <div className="relative order-1 h-[38vh] w-full md:order-2 md:col-span-5 md:h-[68vh]">
+          <Scene3D accent="#c6ff3d" />
+        </div>
       </div>
 
-      {/* Vignette làm tối rìa để chữ nổi bật */}
-      <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(70%_60%_at_50%_50%,transparent_35%,rgba(6,6,10,0.9)_100%)]" />
-
-      <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
-        <motion.p
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease }}
-          className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-muted-foreground"
-        >
-          {t("kicker")}
-        </motion.p>
-
-        <motion.h1
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1, ease }}
-          className="text-balance text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl"
-        >
-          {t("title")}
-        </motion.h1>
-
-        <motion.p
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.25, ease }}
-          className="mx-auto mt-6 max-w-xl text-pretty text-base text-muted-foreground sm:text-lg"
-        >
-          {t("subtitle")}
-        </motion.p>
-
-        <motion.a
-          href="#chapters"
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4, ease }}
-          className="mt-10 inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-medium text-background transition-transform hover:scale-[1.03]"
-        >
-          {t("cta")}
-        </motion.a>
+      {/* Ticker chạy ngang dưới cùng */}
+      <div className="absolute inset-x-0 bottom-0 z-10 overflow-hidden border-t border-border bg-background/70 py-4 backdrop-blur-sm">
+        <div className="animate-marquee flex w-max whitespace-nowrap font-mono text-sm uppercase tracking-[0.2em] text-muted-foreground">
+          {ticker.map((s, i) => (
+            <span key={i} className="flex items-center">
+              <span className="px-6">{s}</span>
+              <span className="text-primary">✦</span>
+            </span>
+          ))}
+        </div>
       </div>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1, duration: 1 }}
-        className="absolute bottom-8 z-10 flex flex-col items-center gap-2 text-muted-foreground"
-      >
-        <span className="font-mono text-[10px] uppercase tracking-[0.2em]">
-          {t("scroll")}
-        </span>
-        <ArrowDown className="h-4 w-4 animate-bounce" />
-      </motion.div>
     </section>
   );
 }
