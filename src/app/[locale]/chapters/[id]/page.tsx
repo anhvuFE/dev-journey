@@ -6,6 +6,8 @@ import { Link } from "@/i18n/navigation";
 import Reveal from "@/components/Reveal";
 import SmoothScroll from "@/components/SmoothScroll";
 import ScrollProgress from "@/components/ScrollProgress";
+import ChapterScrollStory from "@/components/ChapterScrollStory";
+import PhoneMockup3D from "@/components/three/PhoneMockup3D";
 
 export function generateStaticParams() {
   return chapters.map((c) => ({ id: c.id }));
@@ -78,13 +80,19 @@ export default async function ChapterPage({
           </p>
         </header>
 
-        {/* Cốt truyện */}
-        <div className="mt-14 space-y-6">
-          {chapter.story[locale].map((para, i) => (
-            <Reveal key={i} delay={i * 0.05}>
-              <p className="text-lg leading-relaxed">{para}</p>
-            </Reveal>
-          ))}
+        {/* Mockup điện thoại 3D — chỉ cho chương Mobile */}
+        {chapter.id === "mobile" ? (
+          <div className="mt-10 h-[420px] animate-floaty">
+            <PhoneMockup3D
+              accent={chapter.theme.accent}
+              glow={chapter.theme.glow}
+            />
+          </div>
+        ) : null}
+
+        {/* Cốt truyện — kể theo cuộn (GSAP scrollytelling) */}
+        <div className="mt-14">
+          <ChapterScrollStory paragraphs={chapter.story[locale]} />
         </div>
 
         {/* Bài học */}
