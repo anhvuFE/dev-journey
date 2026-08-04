@@ -44,13 +44,19 @@ export default function Hero() {
       ref={sectionRef}
       className="relative flex min-h-[100svh] items-center justify-center overflow-hidden"
     >
-      {/* Nền 3D immersive */}
-      <div ref={bgRef} className="absolute inset-0 -z-10">
-        <Scene3D accent="#6366f1" glow="#a855f7" />
-      </div>
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-background/10 via-background/40 to-background" />
+      {/* Aurora nền mềm (mờ, không lấn nội dung) */}
+      <div className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(55%_45%_at_50%_30%,rgba(99,102,241,0.16),transparent_70%)]" />
+      <div className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(40%_40%_at_82%_18%,rgba(168,85,247,0.12),transparent_70%)]" />
 
-      <div className="mx-auto max-w-3xl px-6 text-center">
+      {/* Lớp 3D tinh tế (wireframe + sparkles + sao) */}
+      <div ref={bgRef} className="absolute inset-0 -z-10">
+        <Scene3D accent="#818cf8" glow="#a855f7" />
+      </div>
+
+      {/* Vignette làm tối rìa để chữ nổi bật */}
+      <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(70%_60%_at_50%_50%,transparent_35%,rgba(6,6,10,0.9)_100%)]" />
+
+      <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
         <motion.p
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
@@ -64,7 +70,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1, ease }}
-          className="text-balance text-4xl font-bold leading-tight tracking-tight sm:text-6xl"
+          className="text-balance text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl"
         >
           {t("title")}
         </motion.h1>
@@ -93,7 +99,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 1 }}
-        className="absolute bottom-8 flex flex-col items-center gap-2 text-muted-foreground"
+        className="absolute bottom-8 z-10 flex flex-col items-center gap-2 text-muted-foreground"
       >
         <span className="font-mono text-[10px] uppercase tracking-[0.2em]">
           {t("scroll")}
