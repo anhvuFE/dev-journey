@@ -1,9 +1,10 @@
 import { setRequestLocale } from "next-intl/server";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Mail, ExternalLink } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import Reveal from "@/components/Reveal";
 import ScrollProgress from "@/components/ScrollProgress";
 import SmoothScroll from "@/components/SmoothScroll";
+import { profile, socialLinks } from "@/data/profile";
 
 type Locale = "vi" | "en";
 
@@ -11,12 +12,12 @@ const copy = {
   vi: {
     back: "Về trang chủ",
     kicker: "Về mình",
-    title: "Chào, mình là một người vẫn đang học code mỗi ngày",
     body: [
-      "Trang này gom lại gần như tất cả những gì mình từng gõ ra: từ mấy trang HTML ngây ngô đầu tiên, tới các dự án full-stack cho khách hàng thật.",
+      "Mình là Vũ Xuân Anh, một Full Stack Developer vẫn đang học mỗi ngày. Trang này gom lại gần như tất cả những gì mình từng gõ ra: từ mấy trang HTML ngây ngô đầu tiên, tới các dự án full-stack cho khách hàng thật.",
       "Mình không phải thiên tài lập trình. Mình chỉ làm nhiều, sai nhiều, và ghi lại. Nếu bạn là newbie, hy vọng hành trình này khiến bạn thấy: ai cũng bắt đầu từ số 0.",
-      "(Đây là chỗ để bạn — Xuan Anh — thêm vài dòng thật của riêng mình.)",
     ],
+    skillsLabel: "Mình làm việc với",
+    connectLabel: "Kết nối với mình",
     stats: [
       { n: "60+", l: "dự án" },
       { n: "7.000+", l: "commit" },
@@ -27,12 +28,12 @@ const copy = {
   en: {
     back: "Back home",
     kicker: "About",
-    title: "Hi, I'm someone still learning to code every day",
     body: [
-      "This page gathers almost everything I've ever typed out: from my first naive HTML pages to full-stack projects for real clients.",
+      "I'm Vũ Xuân Anh, a Full Stack Developer still learning every day. This page gathers almost everything I've ever typed out: from my first naive HTML pages to full-stack projects for real clients.",
       "I'm no coding genius. I just build a lot, break a lot, and write it down. If you're a beginner, I hope this journey shows you that everyone starts at zero.",
-      "(This is where you — Xuan Anh — add a few real lines of your own.)",
     ],
+    skillsLabel: "I work with",
+    connectLabel: "Connect with me",
     stats: [
       { n: "60+", l: "projects" },
       { n: "7,000+", l: "commits" },
@@ -81,21 +82,54 @@ export default async function AboutPage({
             {c.kicker}
           </p>
           <h1 className="glow-text mt-4 text-4xl font-bold tracking-tight sm:text-5xl">
-            {c.title}
+            {profile.name}
           </h1>
+          <p className="mt-2 text-lg" style={{ color: "var(--c-accent)" }}>
+            {profile.title[locale]}
+          </p>
         </Reveal>
 
         <div className="mt-10 space-y-5">
           {c.body.map((p, i) => (
             <Reveal key={i} delay={i * 0.05}>
-              <p className="text-lg leading-relaxed" style={{ color: "var(--c-muted)" }}>
+              <p
+                className="text-lg leading-relaxed"
+                style={{ color: "var(--c-muted)" }}
+              >
                 {p}
               </p>
             </Reveal>
           ))}
         </div>
 
-        <div className="mt-14 grid grid-cols-2 gap-4 sm:grid-cols-4">
+        {/* Kỹ năng */}
+        <Reveal>
+          <div className="mt-12">
+            <p
+              className="text-sm font-semibold uppercase tracking-[0.2em]"
+              style={{ color: "var(--c-accent)" }}
+            >
+              {c.skillsLabel}
+            </p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {profile.skills.map((s) => (
+                <span
+                  key={s}
+                  className="rounded-full border border-white/10 px-3 py-1 text-sm"
+                  style={{
+                    background:
+                      "color-mix(in oklab, var(--c-accent) 10%, transparent)",
+                  }}
+                >
+                  {s}
+                </span>
+              ))}
+            </div>
+          </div>
+        </Reveal>
+
+        {/* Số liệu */}
+        <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-4">
           {c.stats.map((s, i) => (
             <Reveal key={s.l} delay={i * 0.05}>
               <div className="glow-ring rounded-2xl border border-white/10 bg-black/20 p-5 text-center">
@@ -112,6 +146,39 @@ export default async function AboutPage({
             </Reveal>
           ))}
         </div>
+
+        {/* Liên hệ */}
+        <Reveal>
+          <div className="mt-12">
+            <p
+              className="text-sm font-semibold uppercase tracking-[0.2em]"
+              style={{ color: "var(--c-accent)" }}
+            >
+              {c.connectLabel}
+            </p>
+            <div className="mt-4 flex flex-wrap gap-3">
+              {socialLinks.map((link) => (
+                <a
+                  key={link.key}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm transition-colors hover:border-white/40"
+                >
+                  {link.key === "email" ? (
+                    <Mail className="h-4 w-4" style={{ color: "var(--c-accent)" }} />
+                  ) : (
+                    <ExternalLink
+                      className="h-4 w-4"
+                      style={{ color: "var(--c-accent)" }}
+                    />
+                  )}
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          </div>
+        </Reveal>
       </div>
     </div>
   );
