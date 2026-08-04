@@ -5,6 +5,7 @@ import { chapters, getChapter } from "@/data/chapters";
 import { Link } from "@/i18n/navigation";
 import Reveal from "@/components/Reveal";
 import SmoothScroll from "@/components/SmoothScroll";
+import ScrollProgress from "@/components/ScrollProgress";
 
 export function generateStaticParams() {
   return chapters.map((c) => ({ id: c.id }));
@@ -43,6 +44,7 @@ export default async function ChapterPage({
       className="grain relative min-h-screen"
       style={{ background: "var(--c-bg)", color: "var(--c-fg)" }}
     >
+      <ScrollProgress />
       <SmoothScroll />
 
       {/* Vầng sáng nền theo tông chương */}
