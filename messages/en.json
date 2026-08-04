@@ -1,0 +1,31 @@
+{
+  "meta": {
+    "title": "A coding journey — from zero to full-stack",
+    "description": "A real story of learning to code, told through every project. Made for beginners."
+  },
+  "nav": {
+    "home": "Home",
+    "chapters": "Chapters",
+    "about": "About"
+  },
+  "hero": {
+    "kicker": "A true journey",
+    "title": "From my first lines of code to full-stack",
+    "subtitle": "I gathered every project I've built — the wins and the stumbles — into one story for those just starting out.",
+    "cta": "Start reading",
+    "scroll": "Scroll down"
+  },
+  "chapters": {
+    "sectionKicker": "The story",
+    "sectionTitle": "A newbie in 7 chapters",
+    "read": "Read this chapter",
+    "lessons": "Lessons learned",
+    "projects": "Projects in this chapter",
+    "commits": "commits",
+    "clientBadge": "Client project (anonymized)"
+  },
+  "footer": {
+    "madeWith": "Written with honesty and a bit of nostalgia.",
+    "backHome": "Back home"
+  }
+}

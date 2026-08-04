@@ -1,0 +1,31 @@
+{
+  "meta": {
+    "title": "Hành trình code — từ zero đến full-stack",
+    "description": "Câu chuyện học lập trình có thật, kể lại qua từng dự án. Dành cho các bạn mới bắt đầu."
+  },
+  "nav": {
+    "home": "Trang chủ",
+    "chapters": "Các chương",
+    "about": "Về mình"
+  },
+  "hero": {
+    "kicker": "Một hành trình có thật",
+    "title": "Từ những dòng code đầu tiên đến full-stack",
+    "subtitle": "Mình gom lại tất cả dự án đã làm — cả thành công lẫn vấp ngã — kể thành một câu chuyện cho các bạn mới vào nghề.",
+    "cta": "Bắt đầu đọc",
+    "scroll": "Cuộn xuống"
+  },
+  "chapters": {
+    "sectionKicker": "Cốt truyện",
+    "sectionTitle": "7 chương của một newbie",
+    "read": "Đọc chương này",
+    "lessons": "Bài học rút ra",
+    "projects": "Dự án trong chương",
+    "commits": "commit",
+    "clientBadge": "Dự án khách (ẩn danh)"
+  },
+  "footer": {
+    "madeWith": "Viết bằng sự thật và một chút hoài niệm.",
+    "backHome": "Về trang chủ"
+  }
+}
