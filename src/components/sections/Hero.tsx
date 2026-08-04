@@ -1,19 +1,51 @@
 "use client";
 
+import { useRef } from "react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { ArrowDown } from "lucide-react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Scene3D from "@/components/three/Scene3D";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function Hero() {
   const t = useTranslations("hero");
+  const sectionRef = useRef<HTMLElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      const reduce = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+      if (reduce) return;
+      gsap.to(bgRef.current, {
+        yPercent: 25,
+        opacity: 0.3,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+    },
+    { scope: sectionRef },
+  );
 
   return (
-    <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden">
+    <section
+      ref={sectionRef}
+      className="relative flex min-h-[100svh] items-center justify-center overflow-hidden"
+    >
       {/* Nền 3D immersive */}
-      <div className="absolute inset-0 -z-10">
+      <div ref={bgRef} className="absolute inset-0 -z-10">
         <Scene3D accent="#6366f1" glow="#a855f7" />
       </div>
       <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-background/10 via-background/40 to-background" />
