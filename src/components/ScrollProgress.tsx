@@ -33,7 +33,7 @@ export default function ScrollProgress() {
     <div
       ref={ref}
       className="fixed inset-x-0 top-0 z-[60] h-1 origin-left"
-      style={{ background: "var(--c-accent, #6366f1)", transform: "scaleX(0)" }}
+      style={{ background: "var(--c-accent, #c6ff3d)", transform: "scaleX(0)" }}
     />
   );
 }

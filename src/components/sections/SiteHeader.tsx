@@ -17,7 +17,7 @@ export default function SiteHeader() {
           href="/"
           className="font-mono text-sm font-semibold tracking-tight text-foreground"
         >
-          dev<span className="text-accent-c">/</span>journey
+          dev<span className="text-primary">/</span>journey
         </Link>
 
         <nav className="flex items-center gap-6 text-sm text-muted-foreground">
