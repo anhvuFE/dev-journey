@@ -1,5 +1,6 @@
 import { setRequestLocale } from "next-intl/server";
 import SmoothScroll from "@/components/SmoothScroll";
+import ScrollProgress from "@/components/ScrollProgress";
 import SiteHeader from "@/components/sections/SiteHeader";
 import Hero from "@/components/sections/Hero";
 import ChaptersSection from "@/components/sections/ChaptersSection";
@@ -15,6 +16,7 @@ export default async function Home({
 
   return (
     <>
+      <ScrollProgress />
       <SmoothScroll />
       <SiteHeader />
       <main className="flex-1">

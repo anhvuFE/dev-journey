@@ -30,6 +30,12 @@ export default function SiteHeader() {
           >
             {t("chapters")}
           </Link>
+          <Link
+            href="/about"
+            className="transition-colors hover:text-foreground"
+          >
+            {t("about")}
+          </Link>
 
           <div className="flex items-center gap-1 rounded-full border border-border/60 p-0.5">
             {routing.locales.map((l) => (
