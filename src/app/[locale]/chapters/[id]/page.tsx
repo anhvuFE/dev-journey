@@ -1,13 +1,11 @@
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { ArrowLeft } from "lucide-react";
 import { chapters, getChapter } from "@/data/chapters";
-import { Link } from "@/i18n/navigation";
 import SmoothScroll from "@/components/SmoothScroll";
 import ScrollProgress from "@/components/ScrollProgress";
 import ChapterScrollStory from "@/components/ChapterScrollStory";
 import ConstellationBg from "@/components/ConstellationBg";
-import ChapterHeader from "@/components/chapter/ChapterHeader";
+import ChapterSidebar from "@/components/chapter/ChapterSidebar";
 import LessonList from "@/components/chapter/LessonList";
 import TipsGrid from "@/components/chapter/TipsGrid";
 import ProjectList from "@/components/chapter/ProjectList";
@@ -41,6 +39,16 @@ export default async function ChapterPage({
   const back = await getTranslations("footer");
   const idx = chapters.findIndex((c) => c.id === chapter.id);
   const next = chapters[idx + 1];
+  const num = String(chapter.order).padStart(2, "0");
+  const L = locale === "vi";
+  const hasTips = Boolean(chapter.tips && chapter.tips.length);
+
+  const sections = [
+    { id: "story", label: L ? "Câu chuyện" : "Story" },
+    { id: "lessons", label: L ? "Bài học" : "Lessons" },
+    ...(hasTips ? [{ id: "tips", label: L ? "Mẹo" : "Tips" }] : []),
+    { id: "projects", label: L ? "Dự án" : "Projects" },
+  ];
 
   return (
     <div
@@ -51,34 +59,45 @@ export default async function ChapterPage({
       <ScrollProgress />
       <SmoothScroll />
 
-      <div className="relative z-10 mx-auto max-w-4xl px-5 py-14 md:py-20">
-        <Link
-          href="/#chapters"
-          className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          {back("backHome")}
-        </Link>
+      <div className="relative z-10 mx-auto max-w-6xl px-5 py-14 md:py-20">
+        <div className="md:grid md:grid-cols-[240px_1fr] md:gap-14 lg:gap-20">
+          <ChapterSidebar
+            num={num}
+            title={chapter.title[locale]}
+            mood={chapter.theme.mood[locale]}
+            backLabel={back("backHome")}
+            sections={sections}
+          />
 
-        <ChapterHeader chapter={chapter} locale={locale} />
+          <div className="mt-14 md:mt-2">
+            <section id="story" className="scroll-mt-20">
+              {chapter.intro ? (
+                <p className="max-w-2xl text-xl font-medium leading-relaxed">
+                  {chapter.intro[locale]}
+                </p>
+              ) : null}
+              <div className="mt-8 max-w-2xl">
+                <ChapterScrollStory paragraphs={chapter.story[locale]} />
+              </div>
+            </section>
 
-        {chapter.intro ? (
-          <p className="mt-12 max-w-2xl text-xl font-medium leading-relaxed">
-            {chapter.intro[locale]}
-          </p>
-        ) : null}
+            <div id="lessons" className="scroll-mt-20">
+              <LessonList lessons={chapter.lessons} locale={locale} />
+            </div>
 
-        <div className="mt-12 max-w-2xl">
-          <ChapterScrollStory paragraphs={chapter.story[locale]} />
+            {chapter.tips ? (
+              <div id="tips" className="scroll-mt-20">
+                <TipsGrid tips={chapter.tips} locale={locale} />
+              </div>
+            ) : null}
+
+            <div id="projects" className="scroll-mt-20">
+              <ProjectList repos={chapter.repos} locale={locale} />
+            </div>
+
+            {next ? <NextChapterLink next={next} locale={locale} /> : null}
+          </div>
         </div>
-
-        <LessonList lessons={chapter.lessons} locale={locale} />
-
-        {chapter.tips ? <TipsGrid tips={chapter.tips} locale={locale} /> : null}
-
-        <ProjectList repos={chapter.repos} locale={locale} />
-
-        {next ? <NextChapterLink next={next} locale={locale} /> : null}
       </div>
     </div>
   );
