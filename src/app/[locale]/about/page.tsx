@@ -4,6 +4,7 @@ import { Link } from "@/i18n/navigation";
 import Reveal from "@/components/Reveal";
 import ScrollProgress from "@/components/ScrollProgress";
 import SmoothScroll from "@/components/SmoothScroll";
+import ConstellationBg from "@/components/ConstellationBg";
 import { profile, socialLinks } from "@/data/profile";
 
 type Locale = "vi" | "en";
@@ -54,10 +55,11 @@ export default async function AboutPage({
 
   return (
     <div data-theme="growing-up" className="relative min-h-screen bg-background text-foreground">
+      <ConstellationBg color="#a3e635" />
       <ScrollProgress />
       <SmoothScroll />
 
-      <div className="mx-auto max-w-4xl px-5 py-14 md:py-20">
+      <div className="relative z-10 mx-auto max-w-4xl px-5 py-14 md:py-20">
         <Link
           href="/"
           className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"

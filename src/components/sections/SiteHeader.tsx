@@ -13,11 +13,13 @@ export default function SiteHeader() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
-        <Link
-          href="/"
-          className="font-mono text-sm font-semibold tracking-tight text-foreground"
-        >
-          dev<span className="text-primary">/</span>journey
+        <Link href="/" className="group inline-flex items-center gap-2.5">
+          <span className="grid h-7 w-7 place-items-center rounded-[3px] bg-primary font-mono text-[15px] font-bold leading-none text-primary-foreground transition-transform duration-300 group-hover:rotate-[10deg]">
+            /
+          </span>
+          <span className="text-sm font-bold uppercase tracking-[0.18em] text-foreground">
+            dev journey
+          </span>
         </Link>
 
         <nav className="flex items-center gap-6 text-sm text-muted-foreground">

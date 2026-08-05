@@ -165,11 +165,11 @@ export const chapters: Chapter[] = [
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
-    <title>Nhà sách của mình</title>
+    <title>My Bookstore</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>Xin chào thế giới 📚</h1>
+    <h1>Hello, world 📚</h1>
   </body>
 </html>`,
         },
@@ -185,12 +185,12 @@ export const chapters: Chapter[] = [
         snippet: {
           file: "style.css",
           lang: "css",
-          code: `/* Trận chiến 2 tiếng: căn giữa một cái div.
-   Chìa khoá mình ước gì biết sớm hơn: Flexbox */
+          code: `/* The 2-hour battle: centering a div.
+   The key I wish I'd known sooner: Flexbox */
 .hero {
   display: flex;
-  justify-content: center; /* căn ngang */
-  align-items: center;     /* căn dọc */
+  justify-content: center; /* horizontal */
+  align-items: center;     /* vertical */
   min-height: 100vh;
 }`,
         },
@@ -203,6 +203,20 @@ export const chapters: Chapter[] = [
           vi: "Landing quán cà phê — tập chia section và layout.",
           en: "A coffee-shop landing — practicing sections and layout.",
         },
+        snippet: {
+          file: "style.css",
+          lang: "css",
+          code: `.btn {
+  padding: 12px 28px;
+  background: #6f4e37; /* coffee brown */
+  color: #fff;
+  border-radius: 999px;
+  transition: transform 0.2s ease;
+}
+.btn:hover {
+  transform: translateY(-2px);
+}`,
+        },
       },
       {
         name: "backroads-app",
@@ -211,6 +225,16 @@ export const chapters: Chapter[] = [
         blurb: {
           vi: "Làm theo course — học cách dựng bố cục nhiều phần.",
           en: "A course build — learning multi-section layouts.",
+        },
+        snippet: {
+          file: "styles.css",
+          lang: "css",
+          code: `/* responsive grid — no media queries needed */
+.tours {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}`,
         },
       },
     ],
@@ -325,13 +349,13 @@ export const chapters: Chapter[] = [
           file: "src/App.tsx",
           lang: "tsx",
           code: `const [showIntro] = useState<boolean>(() => {
-  if (typeof window === "undefined") return false; // an toàn khi SSR
+  if (typeof window === "undefined") return false; // safe during SSR
   try {
     const seen = localStorage.getItem(INTRO_SEEN_KEY);
     const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
     return !seen && !reduced;
   } catch {
-    return false; // incognito có thể ném lỗi
+    return false; // incognito may throw
   }
 });`,
         },
@@ -406,7 +430,7 @@ export const chapters: Chapter[] = [
 declare global {
   var prismaGlobal: PrismaClient;
 }
-// dev: dùng lại một client toàn cục để không rò rỉ kết nối khi hot-reload
+// dev: reuse one global client to avoid connection leaks on hot-reload
 if (process.env.NODE_ENV !== "production") {
   if (!global.prismaGlobal) global.prismaGlobal = new PrismaClient();
 }
@@ -531,7 +555,7 @@ export default prisma;`,
         snippet: {
           file: "src/stores/cartStore.ts",
           lang: "ts",
-          code: `// mỗi item mang metadata thời gian để tối ưu & debug re-render
+          code: `// each item carries time metadata to optimize & debug re-renders
 export interface CartItem {
   id: string;
   serviceId: string;
@@ -654,7 +678,7 @@ export interface CartItem {
     if (error.message === "TOKEN_EXPIRED" && retryCount < MAX_RETRIES) {
       const t = await getNewAccessToken();
       setAccessToken(t.accessToken);
-      return apiRequest(endpoint, options, retryCount + 1); // gọi lại
+      return apiRequest(endpoint, options, retryCount + 1); // retry
     }
     throw error;
   }
@@ -772,7 +796,7 @@ export interface CartItem {
           file: "fe/App.tsx",
           lang: "tsx",
           code: `await ScreenShield.unshieldFor(minutes);
-// native chưa tự re-shield nếu thiếu DeviceActivityMonitor extension
+// native won't auto re-shield without a DeviceActivityMonitor extension
 reshieldTimer = setTimeout(() => {
   ScreenShield.shieldNow().catch(() => {});
   refetchBank();
@@ -808,7 +832,7 @@ reshieldTimer = setTimeout(() => {
           lang: "ts",
           code: `export const HOURLY_RATE = 75;
 export const BLOCK_MINUTES = 15;
-export const BLOCK_RATE = HOURLY_RATE / 4; // đừng gõ cứng 18.75
+export const BLOCK_RATE = HOURLY_RATE / 4; // don't hardcode 18.75
 export const MINIMUM_BILLABLE_MINUTES = 60;
 export const POST_FIRST_HOUR_HANDYMAN_SPLIT = 0.6;`,
         },
@@ -821,6 +845,24 @@ export const POST_FIRST_HOUR_HANDYMAN_SPLIT = 0.6;`,
           vi: "Nơi mình tập tành React Native từ số 0.",
           en: "Where I learned React Native from zero.",
         },
+        snippet: {
+          file: "components/Greeting.tsx",
+          lang: "tsx",
+          code: `import { View, Text, StyleSheet } from "react-native";
+
+export default function Greeting({ name }: { name: string }) {
+  return (
+    <View style={styles.box}>
+      <Text style={styles.text}>Hello, {name} 👋</Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  box: { padding: 16, alignItems: "center" },
+  text: { fontSize: 18, fontWeight: "600" },
+});`,
+        },
       },
       {
         name: "01-next-rn",
@@ -829,6 +871,18 @@ export const POST_FIRST_HOUR_HANDYMAN_SPLIT = 0.6;`,
         blurb: {
           vi: "Scaffold thử nối Next.js với React Native — mới ở giai đoạn khởi tạo.",
           en: "A scaffold exploring Next.js + React Native — still at the init stage.",
+        },
+        snippet: {
+          file: "app/[slug]/page.tsx",
+          lang: "tsx",
+          code: `export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params; // Next.js 16: params is now a Promise
+  return <h1>{slug}</h1>;
+}`,
         },
       },
     ],
@@ -951,7 +1005,7 @@ export const POST_FIRST_HOUR_HANDYMAN_SPLIT = 0.6;`,
           code: `type pendingEntry struct {
     ch    chan BridgeResponse
     timer *time.Timer
-    once  sync.Once // chặn close/send đồng thời -> hết panic
+    once  sync.Once // guards concurrent close/send -> no panic
 }`,
         },
       },
@@ -1005,6 +1059,22 @@ export const POST_FIRST_HOUR_HANDYMAN_SPLIT = 0.6;`,
           vi: "Game 2D đầu tay bằng Unity — nơi mình lần đầu gặp game loop và state machine.",
           en: "My first 2D game in Unity — where I first met the game loop and state machines.",
         },
+        snippet: {
+          file: "PlayerController.cs",
+          lang: "csharp",
+          code: `using UnityEngine;
+
+public class PlayerController : MonoBehaviour
+{
+    public float speed = 5f;
+
+    void Update() // runs every frame — the game loop
+    {
+        float h = Input.GetAxis("Horizontal");
+        transform.Translate(Vector3.right * h * speed * Time.deltaTime);
+    }
+}`,
+        },
       },
       {
         name: "Thriftly",
@@ -1013,6 +1083,23 @@ export const POST_FIRST_HOUR_HANDYMAN_SPLIT = 0.6;`,
         blurb: {
           vi: "Đồ án Java — luyện tư duy hướng đối tượng và kỷ luật kiểu dữ liệu.",
           en: "A Java project — practicing OOP and type discipline.",
+        },
+        snippet: {
+          file: "Product.java",
+          lang: "java",
+          code: `public class Product {
+    private final String name;
+    private final double price;
+
+    public Product(String name, double price) {
+        this.name = name;
+        this.price = price;
+    }
+
+    public double discountedPrice(double percent) {
+        return price * (1 - percent / 100);
+    }
+}`,
         },
       },
     ],
@@ -1160,7 +1247,7 @@ export const POST_FIRST_HOUR_HANDYMAN_SPLIT = 0.6;`,
           file: "app/routes/app.orders.tsx",
           lang: "ts",
           code: `export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const { admin, session } = await authenticate.admin(request); // luôn auth TRƯỚC
+  const { admin, session } = await authenticate.admin(request); // always auth FIRST
   // ... query Shopify Admin API qua admin.graphql(...)
   return json({ shop: session.shop });
 };`,
@@ -1173,6 +1260,13 @@ export const POST_FIRST_HOUR_HANDYMAN_SPLIT = 0.6;`,
         blurb: {
           vi: "Thử làm một shop online từ đầu — bản nháp đầu tiên trước khi biết tới Shopify.",
           en: "An attempt at an online shop from scratch — my first draft before discovering Shopify.",
+        },
+        snippet: {
+          file: "cart.js",
+          lang: "js",
+          code: `// classic cart total with reduce
+const cartTotal = (items) =>
+  items.reduce((sum, item) => sum + item.price * item.qty, 0);`,
         },
       },
     ],
@@ -1357,7 +1451,7 @@ export const POST_FIRST_HOUR_HANDYMAN_SPLIT = 0.6;`,
   const [time, setTime] = useState(calculate(target));
   useEffect(() => {
     const id = setInterval(() => setTime(calculate(target)), 1000);
-    return () => clearInterval(id); // dọn khi component biến mất
+    return () => clearInterval(id); // clean up on unmount
   }, [target]);
   return time;
 }`,

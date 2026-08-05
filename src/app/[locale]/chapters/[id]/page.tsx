@@ -8,6 +8,7 @@ import SmoothScroll from "@/components/SmoothScroll";
 import ScrollProgress from "@/components/ScrollProgress";
 import ChapterScrollStory from "@/components/ChapterScrollStory";
 import CodeBlock from "@/components/CodeBlock";
+import ConstellationBg from "@/components/ConstellationBg";
 
 export function generateStaticParams() {
   return chapters.map((c) => ({ id: c.id }));
@@ -45,10 +46,11 @@ export default async function ChapterPage({
       data-theme={chapter.theme.key}
       className="relative min-h-screen bg-background text-foreground"
     >
+      <ConstellationBg color={chapter.theme.accent} />
       <ScrollProgress />
       <SmoothScroll />
 
-      <div className="mx-auto max-w-4xl px-5 py-14 md:py-20">
+      <div className="relative z-10 mx-auto max-w-4xl px-5 py-14 md:py-20">
         <Link
           href="/#chapters"
           className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
