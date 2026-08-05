@@ -9,6 +9,7 @@ import SiteHeader from "@/components/sections/SiteHeader";
 import CommandPalette from "@/components/CommandPalette";
 import TerminalEasterEgg from "@/components/TerminalEasterEgg";
 import NeonCursor from "@/components/NeonCursor";
+import BackToTop from "@/components/BackToTop";
 import "../globals.css";
 
 // Sans grotesk (chất modern) — hỗ trợ tiếng Việt đầy đủ.
@@ -99,9 +100,13 @@ export default async function LocaleLayout({
     >
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <NextIntlClientProvider>
+          <a href="#main" className="skip-link">
+            {locale === "vi" ? "Tới nội dung" : "Skip to content"}
+          </a>
           <NeonCursor />
           <SiteHeader />
           {children}
+          <BackToTop />
           <CommandPalette />
           <TerminalEasterEgg />
         </NextIntlClientProvider>

@@ -2,10 +2,12 @@ import { getLocale } from "next-intl/server";
 import { stats } from "@/data/stats";
 import CountUp from "@/components/CountUp";
 import GitHubGraph from "@/components/GitHubGraph";
+import TechBars from "@/components/sections/TechBars";
+import TechDonut from "@/components/sections/TechDonut";
+import GitHubStreak from "@/components/sections/GitHubStreak";
 
 export default async function StatsSection() {
   const locale = (await getLocale()) as "vi" | "en";
-  const max = Math.max(...stats.tech.map((t) => t.count));
 
   return (
     <section className="relative z-10 mx-auto max-w-6xl px-5 py-20 md:py-28">
@@ -34,37 +36,26 @@ export default async function StatsSection() {
       </div>
 
       <div className="mt-14 grid gap-12 md:grid-cols-2">
-        {/* Bar công nghệ */}
+        {/* Bar công nghệ + vòng tỉ trọng */}
         <div>
-          <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary">
-            {locale === "vi" ? "Công nghệ dùng nhiều nhất" : "Most-used tech"}
-          </p>
-          <div className="mt-6 space-y-4">
-            {stats.tech.map((t) => (
-              <div key={t.name}>
-                <div className="flex items-baseline justify-between font-mono text-xs text-muted-foreground">
-                  <span>{t.name}</span>
-                  <span>{t.count}</span>
-                </div>
-                <div className="mt-1.5 h-1.5 w-full bg-white/[0.06]">
-                  <div
-                    className="h-full bg-primary"
-                    style={{ width: `${(t.count / max) * 100}%` }}
-                  />
-                </div>
-              </div>
-            ))}
+          <div className="flex items-start justify-between gap-4">
+            <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary">
+              {locale === "vi" ? "Công nghệ dùng nhiều nhất" : "Most-used tech"}
+            </p>
+            <TechDonut tech={stats.tech} label={locale === "vi" ? "công nghệ" : "tech"} />
           </div>
+          <TechBars tech={stats.tech} locale={locale} />
         </div>
 
-        {/* GitHub activity thật */}
+        {/* GitHub activity thật + streak */}
         <div>
           <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary">
             {locale === "vi" ? "Hoạt động GitHub thật" : "Real GitHub activity"}
           </p>
-          <div className="mt-6 overflow-x-auto">
+          <div className="mt-6 overflow-x-auto [-webkit-overflow-scrolling:touch]">
             <GitHubGraph username={stats.githubUser} />
           </div>
+          <GitHubStreak username={stats.githubUser} locale={locale} />
         </div>
       </div>
     </section>

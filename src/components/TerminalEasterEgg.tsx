@@ -17,6 +17,7 @@ export default function TerminalEasterEgg() {
   const [hIdx, setHIdx] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
+  const prevFocus = useRef<HTMLElement | null>(null);
   const L = locale === "vi";
 
   useEffect(() => {
@@ -45,8 +46,15 @@ export default function TerminalEasterEgg() {
               : "dev-journey shell · type 'help' for commands, 'exit' to quit",
           ],
     );
+    prevFocus.current = document.activeElement as HTMLElement;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
     const t = setTimeout(() => inputRef.current?.focus(), 10);
-    return () => clearTimeout(t);
+    return () => {
+      clearTimeout(t);
+      document.body.style.overflow = prevOverflow;
+      prevFocus.current?.focus?.();
+    };
   }, [open, L]);
 
   useEffect(() => {
@@ -67,6 +75,8 @@ export default function TerminalEasterEgg() {
           "help         — " + (L ? "danh sách lệnh" : "list commands"),
           "whoami       — " + (L ? "về chủ nhân trang này" : "about the author"),
           "ls           — " + (L ? "liệt kê các chương" : "list chapters"),
+          "tree         — " + (L ? "cây cấu trúc site" : "site structure tree"),
+          "neofetch     — " + (L ? "thông tin kiểu neofetch" : "neofetch-style info"),
           "goto <n>     — " + (L ? "mở chương số n" : "open chapter n"),
           "about        — " + (L ? "mở trang giới thiệu" : "open the about page"),
           "home         — " + (L ? "về trang chủ" : "go home"),
@@ -115,6 +125,28 @@ export default function TerminalEasterEgg() {
         router.replace(pathname, { locale: l as "vi" | "en" });
         break;
       }
+      case "tree":
+        print(
+          "dev-journey/",
+          "├─ /              " + (L ? "trang chủ" : "home"),
+          "├─ /about         " + (L ? "về mình" : "about"),
+          "└─ /chapters/",
+          ...chapters.map(
+            (c, i) => `   ${i === chapters.length - 1 ? "└" : "├"}─ ${c.id}`,
+          ),
+        );
+        break;
+      case "neofetch":
+        print(
+          "      /\\         visitor@dev-journey",
+          "     /  \\        ───────────────────",
+          "    / /\\ \\       host   Vũ Xuân Anh (anhvuFE)",
+          "   / /  \\ \\      role   Full Stack Developer",
+          "  / /____\\ \\     stack  TS · React · Next · Node",
+          " /__________\\    chương " + chapters.length,
+          "                since  2022",
+        );
+        break;
       case "clear":
         setLines([]);
         break;
@@ -157,17 +189,24 @@ export default function TerminalEasterEgg() {
 
   return (
     <div
+      role="dialog"
+      aria-label={L ? "Cửa sổ dòng lệnh" : "Terminal"}
       className="fixed inset-x-0 bottom-0 z-[100] border-t border-border bg-[#0a0a0a]/95 backdrop-blur-md"
       onClick={() => inputRef.current?.focus()}
     >
       <div className="mx-auto max-w-4xl px-4 py-3">
         <div className="mb-2 flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-accent-c" />
+          <span className="h-2 w-2 rounded-full bg-accent-c" aria-hidden />
           <span className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
             dev-journey — terminal ( ` · esc )
           </span>
         </div>
-        <div ref={bodyRef} className="max-h-[38vh] overflow-y-auto font-mono text-[13px] leading-relaxed">
+        <div
+          ref={bodyRef}
+          role="log"
+          aria-live="polite"
+          className="max-h-[38vh] overflow-y-auto font-mono text-[13px] leading-relaxed"
+        >
           {lines.map((l, i) => (
             <div key={i} className="whitespace-pre-wrap text-foreground/90">
               {l}
@@ -182,6 +221,7 @@ export default function TerminalEasterEgg() {
               onKeyDown={onKeyDown}
               spellCheck={false}
               autoComplete="off"
+              aria-label={L ? "Nhập lệnh" : "Type a command"}
               className="w-full flex-1 bg-transparent text-foreground focus:outline-none"
             />
           </div>

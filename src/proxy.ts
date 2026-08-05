@@ -6,6 +6,7 @@ import { routing } from "./i18n/routing";
 export const proxy = createMiddleware(routing);
 
 export const config = {
-  // Bỏ qua các đường dẫn nội bộ và file tĩnh
-  matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],
+  // Bỏ qua đường dẫn nội bộ, file tĩnh, và các route metadata sinh động
+  // (icon/apple-icon không có đuôi file nên phải loại tay).
+  matcher: ["/((?!api|_next|_vercel|icon|apple-icon|manifest|sitemap|robots|.*\\..*).*)"],
 };

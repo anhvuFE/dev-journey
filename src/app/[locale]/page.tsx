@@ -9,6 +9,7 @@ import ConstellationBg from "@/components/ConstellationBg";
 import Hero from "@/components/sections/Hero";
 import JourneyTimeline from "@/components/sections/JourneyTimeline";
 import ChaptersSection from "@/components/sections/ChaptersSection";
+import GrowthDiff from "@/components/sections/GrowthDiff";
 import StatsSection from "@/components/sections/StatsSection";
 import SiteFooter from "@/components/sections/SiteFooter";
 
@@ -72,10 +73,11 @@ export default async function Home({
       <ScrollProgress />
       <SmoothScroll />
       <ConstellationBg color="#c6ff3d" />
-      <main className="relative z-10 flex-1">
+      <main id="main" tabIndex={-1} className="relative z-10 flex-1 outline-none">
         <Hero />
         <JourneyTimeline />
         <ChaptersSection />
+        <GrowthDiff locale={locale as "vi" | "en"} />
         <StatsSection />
       </main>
       <div className="relative z-10">

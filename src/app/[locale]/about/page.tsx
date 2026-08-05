@@ -39,8 +39,10 @@ export default async function AboutPage({
 
   return (
     <div
+      id="main"
+      tabIndex={-1}
       data-theme="growing-up"
-      className="relative min-h-screen bg-background text-foreground"
+      className="relative min-h-screen bg-background text-foreground outline-none"
     >
       <ConstellationBg color="#a3e635" />
       <ScrollProgress />
