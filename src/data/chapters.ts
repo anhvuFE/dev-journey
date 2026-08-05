@@ -1315,14 +1315,12 @@ const cartTotal = (items) =>
         "Lần đầu mở một monorepo công ty — web, mobile, backend nằm chung một chỗ, `turbo.json` với `dependsOn: ['^build']` nhìn như tiếng nước ngoài. Cảm giác nhỏ bé trước một hệ thống thật.",
         "Cái ngày CI đỏ lòm vì mình: push code, GitHub Actions báo 403 khi push tag; hoá ra thiếu `permissions: contents: write`. Rồi test tự dưng fail vì DatePicker phụ thuộc ngày giờ hệ thống — mình học cách freeze thời gian trong test.",
         "Bài học Git bằng máu: ở một dự án khác, commit tên `update` nhét luôn cả `node_modules`, còn `src/` code thật thì biến mất chỉ còn `dist/`. Từ đó `.gitignore` là việc đầu tiên của mọi dự án.",
-        "Làm cho người mình thương: website cưới của chính mình — vật lộn với nhạc bị chặn autoplay, deploy GitHub Pages trắng trang vì quên `base`. Nhưng lần đầu tách data ra file riêng và thấy code sạch hẳn — 'à, mình bắt đầu nghĩ như dev thật'.",
         "Mình nhận ra: viết code chạy được là mức sàn. Viết code để người khác đọc hiểu, mở rộng, duy trì được — đó mới là trưởng thành. Và chương này vẫn đang được viết tiếp.",
       ],
       en: [
         "Opening a company monorepo for the first time — web, mobile, backend all in one place, `turbo.json` with `dependsOn: ['^build']` looked like a foreign language. I felt tiny before a real system.",
         "The day CI went red because of me: I pushed, GitHub Actions threw 403 pushing a tag; turns out I lacked `permissions: contents: write`. Then a test failed because a DatePicker depended on the system clock — I learned to freeze time in tests.",
         "A Git lesson in blood: on another project, an `update` commit swallowed `node_modules`, while the real `src/` vanished leaving only `dist/`. Since then `.gitignore` is the first thing in every project.",
-        "Building for someone I love: my own wedding site — fighting blocked audio autoplay, a blank GitHub Pages deploy from a missing `base`. But separating data into its own file for the first time felt clean — 'ah, I'm starting to think like a real dev'.",
         "I realized: making code run is the floor. Writing code others can read, extend, maintain — that's growing up. And this chapter is still being written.",
       ],
     },
@@ -1443,39 +1441,6 @@ const cartTotal = (items) =>
   }),
   description: z.string().min(5),
 });`,
-        },
-      },
-      {
-        name: "online_Wedding",
-        privacy: "personal",
-        stack: ["React", "Vite", "Framer Motion"],
-        commits: 3,
-        blurb: {
-          vi: "Thiệp cưới online của chính mình: đếm ngược, nhạc nền, RSVP. Nơi mình lần đầu 'nghĩ như dev thật'.",
-          en: "My own online wedding invite: countdown, background music, RSVP. Where I first 'thought like a real dev'.",
-        },
-        commitsShown: ["feat: build wedding invitation website", "feat: add GitHub Pages deployment", "Initial commit"],
-        caseStudy: {
-          challenge: {
-            vi: "Nhạc nền bị trình duyệt chặn autoplay; deploy GitHub Pages trắng trang vì sai `base`.",
-            en: "The browser blocked audio autoplay; the GitHub Pages deploy was blank due to a wrong `base`.",
-          },
-          fix: {
-            vi: "Chỉ `.play()` sau khi user bấm 'Enter' + `.catch()` nuốt lỗi; set `base: '/online_Wedding/'` trong `vite.config.ts` và dùng `import.meta.env.BASE_URL` cho asset.",
-            en: "Only `.play()` after the user clicks 'Enter' + `.catch()` to swallow errors; set `base: '/online_Wedding/'` in `vite.config.ts` and use `import.meta.env.BASE_URL` for assets.",
-          },
-        },
-        snippet: {
-          file: "src/hooks/use-countdown.ts",
-          lang: "ts",
-          code: `export function useCountdown(target: string): CountdownTime {
-  const [time, setTime] = useState(calculate(target));
-  useEffect(() => {
-    const id = setInterval(() => setTime(calculate(target)), 1000);
-    return () => clearInterval(id); // clean up on unmount
-  }, [target]);
-  return time;
-}`,
         },
       },
       {
