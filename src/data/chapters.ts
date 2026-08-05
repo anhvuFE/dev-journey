@@ -529,13 +529,13 @@ export default prisma;`,
     ],
     repos: [
       {
-        name: "LCMS_v2",
+        name: "LCMS — Laundry Chain Management (capstone FPT)",
         privacy: "personal",
         stack: ["React", "Zustand", "NestJS", "MongoDB"],
         commits: 463,
         blurb: {
-          vi: "Hệ thống quản lý dịch vụ giặt ủi/vệ sinh 4 vai trò: booking, thanh toán, tồn kho, và chấm công bằng nhận diện khuôn mặt. Dự án lớn nhất tự làm.",
-          en: "A laundry & cleaning management system for 4 roles: booking, payments, inventory, and face-recognition attendance. My biggest solo build.",
+          vi: "Đồ án tốt nghiệp FPT: hệ thống quản lý chuỗi giặt là đa chi nhánh — theo dõi đơn qua từng công đoạn (nhận → giặt → sấy → ủi → giao), phân quyền admin/staff/quản lý chi nhánh, dashboard doanh thu realtime. Dự án lớn nhất, 463 commit.",
+          en: "My FPT capstone: a multi-branch laundry chain management system — order tracking through each stage (received → washing → drying → ironing → delivered), role-based access for admin/staff/branch managers, a real-time revenue dashboard. My biggest build, 463 commits.",
         },
         commitsShown: [
           "feat(performance): achieve 97/100 Lighthouse score - production optimization",
@@ -568,13 +568,13 @@ export interface CartItem {
         },
       },
       {
-        name: "Ecocau",
+        name: "EcoCau",
         privacy: "personal",
         stack: ["React", "Zustand", "EmailJS", "Nginx"],
         commits: 137,
         blurb: {
-          vi: "Web bán sản phẩm thân thiện môi trường: giỏ hàng, checkout, blog, admin. Đơn gửi qua EmailJS, giá VND, đa ngôn ngữ.",
-          en: "An eco-friendly e-commerce site: cart, checkout, blog, admin. Orders via EmailJS, VND pricing, bilingual.",
+          vi: "Sáng kiến bền vững: tái chế mo cau (bẹ cau rụng tự nhiên) thành sản phẩm tiêu dùng thân thiện môi trường — giảm rác thải, hạn chế nhựa. Web đầy đủ: giỏ hàng, checkout, blog, admin; đơn gửi qua EmailJS, giá VND, song ngữ.",
+          en: "A sustainability initiative: upcycling areca palm sheaths into eco-friendly consumer products — reducing waste and plastic. Full site: cart, checkout, blog, admin; orders via EmailJS, VND pricing, bilingual.",
         },
         commitsShown: [
           "fix: step by step in order, timezone,...",
@@ -639,13 +639,13 @@ export interface CartItem {
         },
       },
       {
-        name: "Kiosk đọc báo số (công ty)",
+        name: "Kiosko",
         privacy: "client",
         stack: ["React", "React Query", "Firebase", "Vite"],
         commits: 465,
         blurb: {
-          vi: "SPA đọc báo/tạp chí số: subscription, bookmark, cá nhân hoá 'For You', nghe bài viết (text-to-speech). Dự án công ty — ẩn danh.",
-          en: "A digital news/magazine SPA: subscriptions, bookmarks, a personalized 'For You', and text-to-speech. Company project — anonymized.",
+          vi: "Nền tảng đọc báo & tạp chí số (hợp tác ReadON + ONMO Gaming): số hoá trải nghiệm đọc, tối ưu phân phối tin theo nguồn & chủ đề; có subscription, bookmark, cá nhân hoá 'For You', và nghe bài viết (text-to-speech).",
+          en: "A digital news & magazine platform (with ReadON + ONMO Gaming): digitizing the reading experience, optimizing news distribution by source & category; with subscriptions, bookmarks, a personalized 'For You', and text-to-speech.",
         },
         commitsShown: [
           "feat: Replace cookie-based authentication with localStorage token storage",
@@ -769,13 +769,13 @@ export interface CartItem {
     ],
     repos: [
       {
-        name: "App kiểm soát giờ dùng máy (prototype)",
+        name: "ScreenMindr",
         privacy: "client",
         stack: ["React Native", "Expo", "NestJS", "Firebase"],
         commits: 16,
         blurb: {
-          vi: "App cho trẻ làm nhiệm vụ đổi giờ dùng máy; iOS tự khoá app khi hết giờ. 3 mặt: app con (Expo), backend (NestJS GraphQL), dashboard bố mẹ. Đã ẩn danh.",
-          en: "A kids' app that earns screen time by doing tasks; iOS locks apps when time's up. Three surfaces: child app (Expo), backend (NestJS GraphQL), parent dashboard. Anonymized.",
+          vi: "App quản lý thời gian màn hình cho gia đình: app con (iOS/Android) + web cho bố mẹ giao nhiệm vụ & thưởng giờ dùng máy. Tích hợp iOS Screen Time (FamilyControls / ManagedSettings / DeviceActivity), đồng bộ khoá/mở realtime qua Firebase Cloud Messaging, app extensions để re-block nền.",
+          en: "A family screen-time app: a child device app (iOS/Android) + a parent web dashboard for assigning tasks and rewarding unlock time. Integrates iOS Screen Time (FamilyControls / ManagedSettings / DeviceActivity), real-time block/unlock sync via Firebase Cloud Messaging, and app extensions for background re-blocking.",
         },
         commitsShown: [
           "learn react native",
@@ -804,13 +804,13 @@ reshieldTimer = setTimeout(() => {
         },
       },
       {
-        name: "App đặt lịch dịch vụ sửa nhà (khách hàng)",
+        name: "Ohana Handyman Group",
         privacy: "client",
         stack: ["React", "Capacitor", "Supabase", "Stripe"],
         commits: 3876,
         blurb: {
-          vi: "Marketplace đặt lịch thợ sửa nhà theo giờ: tính tiền theo phút, chia doanh thu Stripe Connect, đặt lịch bằng giọng nói. Đồng tác giả — đã ẩn danh.",
-          en: "A marketplace to book home-repair pros by the hour: per-minute billing, Stripe Connect revenue split, voice booking. Co-authored — anonymized.",
+          vi: "Nền tảng full-stack đặt lịch dịch vụ sửa nhà theo yêu cầu: luồng đặt lịch kép (dashboard + khách vãng lai), hệ định giá động 'duration-first' trên catalog 238+ dịch vụ, làm tròn theo khối 15 phút, chia doanh thu Stripe Connect, và trợ lý chat AI.",
+          en: "A full-stack on-demand handyman booking platform: a dual booking flow (dashboard + guest checkout), a duration-first dynamic pricing system over a 238+ service catalog with quarter-hour rounding, Stripe Connect revenue split, and an AI chat assistant.",
         },
         commitsShown: [
           "fix(booking): resolve double-discount, per-service rounding, and AI service matching",
@@ -1186,13 +1186,13 @@ public class PlayerController : MonoBehaviour
     ],
     repos: [
       {
-        name: "Monorepo 11 Shopify app (công ty)",
+        name: "Shopify — hệ sinh thái app (neliSoftwares)",
         privacy: "client",
-        stack: ["Shopify", "Remix", "Prisma", "AWS"],
+        stack: ["Shopify", "Remix", "Prisma", "AWS", "Fly.io"],
         commits: 1026,
         blurb: {
-          vi: "Monorepo gộp 11 Shopify app (label maker, stock alert, pre-order...) share chung 1 Postgres + các package `shared-*`. Đồng tác giả — ẩn danh.",
-          en: "A monorepo of 11 Shopify apps (label maker, stock alert, pre-order...) sharing one Postgres + `shared-*` packages. Co-authored — anonymized.",
+          vi: "Hệ sinh thái Shopify app trong monorepo npm-workspaces, mỗi app trên Remix, share chung 1 PostgreSQL qua Prisma. Các app: Label Maker, FAQ Page, Stock Alert, Pre-Order, Admin Dashboard. Polaris + App Bridge, Theme App Extensions (Liquid), App Proxy; deploy Fly.io + GitHub Actions.",
+          en: "An ecosystem of Shopify apps in an npm-workspaces monorepo, each on Remix, sharing one PostgreSQL via Prisma. Apps: Label Maker, FAQ Page, Stock Alert, Pre-Order, Admin Dashboard. Polaris + App Bridge, Theme App Extensions (Liquid), App Proxy; deployed to Fly.io + GitHub Actions.",
         },
         commitsShown: [
           "fix(faq-page): accept test charges on dev stores + typed GraphQL split",
