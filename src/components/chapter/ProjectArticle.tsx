@@ -5,27 +5,18 @@ import type { RepoItem } from "@/data/chapters";
 export default function ProjectArticle({
   repo,
   locale,
-  commitsLabel,
   clientLabel,
 }: {
   repo: RepoItem;
   locale: "vi" | "en";
-  commitsLabel: string;
   clientLabel: string;
 }) {
   return (
     <Reveal>
       <article className="border-b border-border py-8">
-        <div className="flex items-baseline justify-between gap-3">
-          <h3 className="font-mono text-base font-bold md:text-lg">
-            {repo.name}
-          </h3>
-          {repo.commits ? (
-            <span className="shrink-0 font-mono text-xs text-muted-foreground">
-              {repo.commits} {commitsLabel}
-            </span>
-          ) : null}
-        </div>
+        <h3 className="font-mono text-base font-bold md:text-lg">
+          {repo.name}
+        </h3>
 
         <p className="mt-2 max-w-2xl text-[15px] leading-relaxed text-muted-foreground">
           {repo.blurb[locale]}

@@ -981,8 +981,8 @@ const styles = StyleSheet.create({
         stack: ["Go", "MCP", "WebSocket", "Svelte"],
         commits: 25,
         blurb: {
-          vi: "Server MCP cho phép AI đọc/sửa file Figma trực tiếp qua plugin + WebSocket, né rate-limit của REST API. Dự án nhóm, đã ẩn danh.",
-          en: "An MCP server letting AI read/edit Figma files directly via a plugin + WebSocket, dodging REST rate limits. Team project, anonymized.",
+          vi: "Server MCP cho phép AI đọc/sửa file Figma trực tiếp qua plugin + WebSocket, né rate-limit của REST API. Dự án nhóm.",
+          en: "An MCP server letting AI read/edit Figma files directly via a plugin + WebSocket, dodging REST rate limits. Team project.",
         },
         commitsShown: [
           "fix: fix channel panic",
@@ -1014,8 +1014,8 @@ const styles = StyleSheet.create({
         privacy: "client",
         stack: ["Go", "Gin", "GORM", "MySQL"],
         blurb: {
-          vi: "Backend REST cho một shop online nhỏ: auth, sản phẩm, đơn hàng, upload ảnh. Clean Architecture 4 tầng. Dự án nhóm, ẩn danh.",
-          en: "A REST backend for a small shop: auth, products, orders, image upload. A slim 4-layer clean architecture. Team project, anonymized.",
+          vi: "Backend REST cho một shop online nhỏ: auth, sản phẩm, đơn hàng, upload ảnh. Clean Architecture 4 tầng. Dự án nhóm.",
+          en: "A REST backend for a small shop: auth, products, orders, image upload. A slim 4-layer clean architecture. Team project.",
         },
         commitsShown: [
           "Implement product stock deduction on order actions",
