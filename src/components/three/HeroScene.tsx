@@ -43,8 +43,8 @@ const AXES: Record<Axis, THREE.Vector3> = {
   y: new THREE.Vector3(0, 1, 0),
   z: new THREE.Vector3(0, 0, 1),
 };
-const MOVE_DUR = 0.26; // giây / một lượt xoay lớp
-const REST = 2.4; // nghỉ trước khi xáo lại
+const MOVE_DUR = 0.26; // giây / một lượt xoay lớp khi giải
+const SOLVED_HOLD = 1.8; // giữ khoe cube đã giải xong trước khi xáo lại
 
 function stickers(x: number, y: number, z: number) {
   const off = 0.49;
@@ -74,6 +74,16 @@ function randomMoves(n: number, seedStart: number): Move[] {
   return out;
 }
 
+/** Dựng scramble ngẫu nhiên + hàng đợi giải = nghịch đảo của scramble. */
+function scrambleAndSolveQueue(seed: number, apply: (m: Move) => void): Move[] {
+  const scr = randomMoves(22, seed);
+  scr.forEach(apply); // xáo TỨC THÌ (người xem không thấy bước xáo)
+  return scr
+    .slice()
+    .reverse()
+    .map((m) => ({ ...m, dir: -m.dir })); // giải = đảo ngược
+}
+
 function Rubik({ accent }: { accent: string }) {
   const root = useRef<THREE.Group>(null);
   const refs = useRef<(THREE.Group | null)[]>([]);
@@ -89,12 +99,12 @@ function Rubik({ accent }: { accent: string }) {
   const st = useRef({
     inited: false,
     reduce: false,
-    phase: "solving" as "solving" | "rest",
-    queue: [] as Move[],
-    mi: 0,
+    phase: "solving" as "solving" | "solved",
+    queue: [] as Move[], // các lượt giải còn lại
+    qi: 0, // lượt hiện tại
     moving: false,
     t: 0,
-    restT: 0,
+    holdT: 0, // thời gian đang khoe cube đã giải
     round: 0,
     axisV: new THREE.Vector3(),
     dir: 1,
@@ -141,16 +151,13 @@ function Rubik({ accent }: { accent: string }) {
     const s = st.current;
     const dt = Math.min(delta, 0.05);
 
-    // Khởi tạo: xáo tức thì rồi dựng hàng đợi giải (đảo ngược scramble)
+    // Khởi tạo: xáo tức thì + dựng hàng đợi giải
     if (!s.inited) {
       s.reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (!s.reduce) {
-        const scr = randomMoves(20, 1);
-        scr.forEach(applyInstant);
-        s.queue = scr
-          .slice()
-          .reverse()
-          .map((m) => ({ ...m, dir: -m.dir }));
+        s.queue = scrambleAndSolveQueue(1, applyInstant);
+        s.qi = 0;
+        s.phase = "solving";
       }
       s.inited = true;
     }
@@ -168,17 +175,24 @@ function Rubik({ accent }: { accent: string }) {
         0.6 + state.pointer.x * 0.35,
         0.05,
       );
+      // "pop" ăn mừng khi vừa giải xong (phồng nhẹ rồi về)
+      const pop =
+        s.phase === "solved"
+          ? 1 + 0.05 * Math.sin((Math.min(s.holdT, 0.4) / 0.4) * Math.PI)
+          : 1;
+      root.current.scale.setScalar(SCALE * pop);
     }
 
     if (s.reduce) return;
 
     if (s.phase === "solving") {
       if (!s.moving) {
-        if (s.mi < s.queue.length) {
-          startMove(s.queue[s.mi]);
+        if (s.qi < s.queue.length) {
+          startMove(s.queue[s.qi]);
         } else {
-          s.phase = "rest";
-          s.restT = 0;
+          // đã giải xong -> khoe cube hoàn chỉnh
+          s.phase = "solved";
+          s.holdT = 0;
         }
       } else {
         s.t += dt / MOVE_DUR;
@@ -201,20 +215,16 @@ function Rubik({ accent }: { accent: string }) {
             );
           });
           s.moving = false;
-          s.mi += 1;
+          s.qi += 1;
         }
       }
     } else {
-      s.restT += dt;
-      if (s.restT > REST) {
+      // Giữ khoe cube đã giải rồi xáo lại (tức thì) để giải ván mới
+      s.holdT += dt;
+      if (s.holdT > SOLVED_HOLD) {
         s.round += 1;
-        const scr = randomMoves(20, s.round * 50 + 3);
-        scr.forEach(applyInstant);
-        s.queue = scr
-          .slice()
-          .reverse()
-          .map((m) => ({ ...m, dir: -m.dir }));
-        s.mi = 0;
+        s.queue = scrambleAndSolveQueue(s.round * 50 + 7, applyInstant);
+        s.qi = 0;
         s.phase = "solving";
       }
     }
