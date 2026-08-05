@@ -59,7 +59,7 @@ export default async function ChapterPage({
       <ScrollProgress />
       <SmoothScroll />
 
-      <div className="relative z-10 mx-auto max-w-6xl px-5 py-14 md:py-20">
+      <div className="relative z-10 mx-auto max-w-6xl px-5 pt-24 pb-14 md:pt-28 md:pb-20">
         <div className="md:grid md:grid-cols-[240px_1fr] md:gap-14 lg:gap-20">
           <ChapterSidebar
             num={num}
@@ -70,7 +70,7 @@ export default async function ChapterPage({
           />
 
           <div className="mt-14 md:mt-2">
-            <section id="story" className="scroll-mt-20">
+            <section id="story" className="scroll-mt-28">
               {chapter.intro ? (
                 <p className="max-w-2xl text-xl font-medium leading-relaxed">
                   {chapter.intro[locale]}
@@ -81,17 +81,17 @@ export default async function ChapterPage({
               </div>
             </section>
 
-            <div id="lessons" className="scroll-mt-20">
+            <div id="lessons" className="scroll-mt-28">
               <LessonList lessons={chapter.lessons} locale={locale} />
             </div>
 
             {chapter.tips ? (
-              <div id="tips" className="scroll-mt-20">
+              <div id="tips" className="scroll-mt-28">
                 <TipsGrid tips={chapter.tips} locale={locale} />
               </div>
             ) : null}
 
-            <div id="projects" className="scroll-mt-20">
+            <div id="projects" className="scroll-mt-28">
               <ProjectList repos={chapter.repos} locale={locale} />
             </div>
 

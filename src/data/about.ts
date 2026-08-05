@@ -6,7 +6,8 @@ export interface AboutCopy {
   body: string[];
   skillsLabel: string;
   connectLabel: string;
-  stats: { n: string; l: string }[];
+  // n = số để đếm động; text = giá trị chữ (mốc không đếm được); l = nhãn
+  stats: { n?: number; suffix?: string; sep?: boolean; text?: string; l: string }[];
 }
 
 export const aboutCopy: Record<Locale, AboutCopy> = {
@@ -20,10 +21,10 @@ export const aboutCopy: Record<Locale, AboutCopy> = {
     skillsLabel: "Mình làm việc với",
     connectLabel: "Kết nối với mình",
     stats: [
-      { n: "60+", l: "dự án" },
-      { n: "7.000+", l: "commit" },
-      { n: "8+", l: "ngôn ngữ" },
-      { n: "2022→nay", l: "hành trình" },
+      { n: 62, suffix: "+", l: "dự án" },
+      { n: 7300, suffix: "+", sep: true, l: "commit" },
+      { n: 8, suffix: "+", l: "ngôn ngữ" },
+      { n: 4, suffix: " năm", l: "từ 2022 tới nay" },
     ],
   },
   en: {
@@ -36,10 +37,10 @@ export const aboutCopy: Record<Locale, AboutCopy> = {
     skillsLabel: "I work with",
     connectLabel: "Connect with me",
     stats: [
-      { n: "60+", l: "projects" },
-      { n: "7,000+", l: "commits" },
-      { n: "8+", l: "languages" },
-      { n: "2022→now", l: "the journey" },
+      { n: 62, suffix: "+", l: "projects" },
+      { n: 7300, suffix: "+", sep: true, l: "commits" },
+      { n: 8, suffix: "+", l: "languages" },
+      { n: 4, suffix: " yrs", l: "since 2022" },
     ],
   },
 };
