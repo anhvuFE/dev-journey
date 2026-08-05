@@ -6,7 +6,7 @@ import { timeline } from "@/data/timeline";
 
 // Hình học đường nhịp tim (ECG)
 const COL = 260; // khoảng cách giữa các "nhịp"
-const X0 = 80; // lề trái tới nhịp đầu
+const X0 = 140; // lề trái tới nhịp đầu (đủ rộng để card đầu không bị cắt)
 const Y0 = 70; // đường nền (baseline)
 const A = 42; // độ cao đỉnh R (nhịp)
 const H = 150; // cao vùng vẽ ECG
