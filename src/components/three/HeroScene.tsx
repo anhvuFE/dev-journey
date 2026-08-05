@@ -155,17 +155,17 @@ function Rubik({ accent }: { accent: string }) {
       s.inited = true;
     }
 
-    // Xoay chậm tổng thể + nghiêng theo chuột
+    // Giữ hướng 3/4 ổn định, chỉ nghiêng nhẹ theo chuột.
+    // (KHÔNG tự xoay tròn -> khối không còn "phình/thu" theo góc nhìn)
     if (root.current) {
-      root.current.rotation.y += 0.003;
       root.current.rotation.x = THREE.MathUtils.lerp(
         root.current.rotation.x,
-        0.32 + state.pointer.y * 0.45,
+        0.35 + state.pointer.y * 0.22,
         0.05,
       );
-      root.current.rotation.z = THREE.MathUtils.lerp(
-        root.current.rotation.z,
-        state.pointer.x * 0.3,
+      root.current.rotation.y = THREE.MathUtils.lerp(
+        root.current.rotation.y,
+        0.6 + state.pointer.x * 0.35,
         0.05,
       );
     }
