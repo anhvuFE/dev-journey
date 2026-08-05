@@ -5,6 +5,7 @@ import Reveal from "@/components/Reveal";
 import ScrollProgress from "@/components/ScrollProgress";
 import SmoothScroll from "@/components/SmoothScroll";
 import ConstellationBg from "@/components/ConstellationBg";
+import Certificates from "@/components/sections/Certificates";
 import { profile, socialLinks } from "@/data/profile";
 
 type Locale = "vi" | "en";
@@ -123,6 +124,9 @@ export default async function AboutPage({
             ))}
           </div>
         </section>
+
+        {/* Chứng chỉ */}
+        <Certificates />
 
         {/* Liên hệ */}
         <section className="mt-16">
