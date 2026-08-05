@@ -22,8 +22,8 @@ export default async function StatsSection() {
       {/* Đếm động */}
       <div className="mt-10 grid grid-cols-2 gap-px border border-border bg-border md:grid-cols-4">
         {stats.counters.map((c) => (
-          <div key={c.key} className="bg-background p-6">
-            <div className="text-4xl font-extrabold text-primary md:text-5xl">
+          <div key={c.key} className="bg-background p-4 sm:p-6">
+            <div className="text-3xl font-extrabold text-primary sm:text-4xl md:text-5xl">
               <CountUp value={c.value} suffix={c.suffix} sep={c.sep} />
             </div>
             <div className="mt-2 font-mono text-[11px] uppercase tracking-wide text-muted-foreground">

@@ -2,7 +2,7 @@ import { profile } from "@/data/profile";
 
 // Chip kỹ năng — dùng chung cho 2 hàng marquee
 const chip =
-  "shrink-0 whitespace-nowrap border border-border px-3 py-1.5 font-mono text-xs uppercase tracking-wide text-muted-foreground";
+  "shrink-0 whitespace-nowrap border border-border px-2.5 py-1 font-mono text-[11px] uppercase tracking-wide text-muted-foreground sm:px-3 sm:py-1.5 sm:text-xs";
 
 export default function SkillList({ label }: { label: string }) {
   // Hàng trên chạy trái, hàng dưới đảo thứ tự + chạy phải -> đối nhau cho sinh động.

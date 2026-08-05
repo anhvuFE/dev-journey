@@ -17,7 +17,7 @@ export default function TipsGrid({
       <div className="mt-6 grid gap-px border border-border bg-border sm:grid-cols-2">
         {tips.map((tip, i) => (
           <Reveal key={i}>
-            <div className="h-full bg-background p-6">
+            <div className="h-full bg-background p-5 sm:p-6">
               <h3 className="font-bold">{tip.title[locale]}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                 {tip.body[locale]}

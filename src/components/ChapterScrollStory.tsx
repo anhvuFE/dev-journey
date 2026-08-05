@@ -50,7 +50,7 @@ export default function ChapterScrollStory({
   return (
     <div ref={root} className="space-y-8">
       {paragraphs.map((para, i) => (
-        <p key={i} className="story-line text-xl leading-relaxed">
+        <p key={i} className="story-line text-base leading-relaxed sm:text-lg md:text-xl">
           {para}
         </p>
       ))}

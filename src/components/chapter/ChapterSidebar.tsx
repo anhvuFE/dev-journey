@@ -52,17 +52,39 @@ export default function ChapterSidebar({
       </Link>
 
       <div
-        className="mt-10 font-mono text-5xl font-extrabold leading-none md:text-6xl"
+        className="mt-8 font-mono text-4xl font-extrabold leading-none sm:text-5xl md:mt-10 md:text-6xl"
         style={{ color: "var(--c-accent)" }}
       >
         {num}
       </div>
-      <h1 className="mt-4 text-2xl font-extrabold uppercase leading-[1.1] tracking-tight md:text-3xl">
+      <h1 className="mt-4 text-xl font-extrabold uppercase leading-[1.1] tracking-tight sm:text-2xl md:text-3xl">
         {title}
       </h1>
       <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
         {mood}
       </p>
+
+      {/* Nav mục cho mobile: hàng chip cuộn ngang */}
+      <nav className="mt-6 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] md:hidden [&::-webkit-scrollbar]:hidden">
+        {sections.map((s) => {
+          const on = active === s.id;
+          return (
+            <a
+              key={s.id}
+              href={`#${s.id}`}
+              onClick={(e) => go(e, s.id)}
+              className={cn(
+                "shrink-0 whitespace-nowrap border px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.14em] transition-colors",
+                on
+                  ? "border-transparent bg-accent-c text-background"
+                  : "border-border text-muted-foreground",
+              )}
+            >
+              {s.label}
+            </a>
+          );
+        })}
+      </nav>
 
       <nav className="mt-10 hidden flex-col gap-3.5 md:flex">
         {sections.map((s) => {

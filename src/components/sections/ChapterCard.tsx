@@ -25,12 +25,12 @@ export default function ChapterCard({
     >
       <Link
         href={`/chapters/${chapter.id}`}
-        className="group relative flex items-center gap-6 overflow-hidden border-b border-border py-10 md:gap-10"
+        className="group relative flex items-center gap-4 overflow-hidden border-b border-border py-8 sm:gap-6 sm:py-10 md:gap-10"
       >
         {/* Số watermark khổng lồ ở nền */}
         <span
           aria-hidden
-          className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 select-none font-mono text-[6rem] font-extrabold leading-none opacity-[0.05] transition-opacity duration-500 group-hover:opacity-[0.13] md:text-[9.5rem]"
+          className="pointer-events-none absolute right-1 top-1/2 -translate-y-1/2 select-none font-mono text-[3.5rem] font-extrabold leading-none opacity-[0.04] transition-opacity duration-500 group-hover:opacity-[0.13] sm:right-2 sm:text-[6rem] sm:opacity-[0.05] md:text-[9.5rem]"
           style={{ color: "var(--c-accent)" }}
         >
           {num}
