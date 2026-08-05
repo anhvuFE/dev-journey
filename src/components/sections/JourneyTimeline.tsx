@@ -1,12 +1,10 @@
 "use client";
 
-import { useMemo, useRef, type MouseEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type MouseEvent } from "react";
 import { useLocale } from "next-intl";
 import { timeline } from "@/data/timeline";
 
-// Hình học đường nhịp tim (ECG)
-const COL = 260; // khoảng cách giữa các "nhịp"
-const X0 = 140; // lề trái tới nhịp đầu (đủ rộng để card đầu không bị cắt)
+// Hình học đường nhịp tim (ECG) — cố định theo chiều dọc
 const Y0 = 70; // đường nền (baseline)
 const A = 42; // độ cao đỉnh R (nhịp)
 const H = 150; // cao vùng vẽ ECG
@@ -15,6 +13,19 @@ export default function JourneyTimeline() {
   const locale = useLocale() as "vi" | "en";
   const scroller = useRef<HTMLDivElement>(null);
   const drag = useRef({ down: false, startX: 0, startLeft: 0 });
+
+  // Mobile: thu hẹp khoảng cách nhịp & lề để bớt phải cuộn ngang
+  const [compact, setCompact] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 640px)");
+    const sync = () => setCompact(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  const COL = compact ? 150 : 260; // khoảng cách giữa các "nhịp"
+  const X0 = compact ? 88 : 140; // lề trái tới nhịp đầu
 
   const n = timeline.length;
   const totalW = X0 * 2 + (n - 1) * COL;
@@ -33,7 +44,7 @@ export default function JourneyTimeline() {
     }
     d += ` L ${totalW} ${Y0}`;
     return d;
-  }, [n, totalW]);
+  }, [n, totalW, COL, X0]);
 
   const onDown = (e: MouseEvent) => {
     const el = scroller.current;
@@ -112,16 +123,16 @@ export default function JourneyTimeline() {
                   }}
                 />
                 <div
-                  className="absolute w-52 -translate-x-1/2 px-1 transition-transform duration-300 group-hover:-translate-y-1"
+                  className="absolute w-36 -translate-x-1/2 px-1 transition-transform duration-300 group-hover:-translate-y-1 sm:w-52"
                   style={{ top: Y0 + 24 }}
                 >
                   <div
-                    className="font-mono text-2xl font-extrabold tabular-nums"
+                    className="font-mono text-xl font-extrabold tabular-nums sm:text-2xl"
                     style={{ color: m.accent }}
                   >
                     {m.year}
                   </div>
-                  <div className="mt-2 text-[14px] font-semibold leading-snug text-foreground">
+                  <div className="mt-2 text-[13px] font-semibold leading-snug text-foreground sm:text-[14px]">
                     {m.title[locale]}
                   </div>
                 </div>

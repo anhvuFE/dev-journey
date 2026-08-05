@@ -94,7 +94,7 @@ export default function Hero() {
           >
             <MagneticButton
               href="#chapters"
-              className="mt-9 inline-flex items-center gap-3 bg-primary px-8 py-4 text-sm font-bold uppercase tracking-widest text-primary-foreground"
+              className="mt-9 inline-flex items-center gap-2 bg-primary px-6 py-3.5 text-xs font-bold uppercase tracking-widest text-primary-foreground sm:gap-3 sm:px-8 sm:py-4 sm:text-sm"
             >
               {t("cta")} <span aria-hidden>→</span>
             </MagneticButton>
@@ -112,10 +112,10 @@ export default function Hero() {
 
       {/* Ticker chạy ngang dưới cùng */}
       <div className="absolute inset-x-0 bottom-0 z-10 overflow-hidden border-t border-border bg-background/70 py-4 backdrop-blur-sm">
-        <div className="animate-marquee flex w-max whitespace-nowrap font-mono text-sm uppercase tracking-[0.2em] text-muted-foreground">
+        <div className="animate-marquee flex w-max whitespace-nowrap font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground sm:text-sm sm:tracking-[0.2em]">
           {ticker.map((s, i) => (
             <span key={i} className="flex items-center">
-              <span className="px-6">{s}</span>
+              <span className="px-4 sm:px-6">{s}</span>
               <span className="text-primary">✦</span>
             </span>
           ))}

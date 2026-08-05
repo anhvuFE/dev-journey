@@ -8,9 +8,9 @@ export default function StatGrid({
   return (
     <div className="mt-16 grid grid-cols-2 gap-px border border-border bg-border sm:grid-cols-4">
       {stats.map((s) => (
-        <div key={s.l} className="bg-background p-6 text-center">
+        <div key={s.l} className="bg-background p-4 text-center sm:p-6">
           <div
-            className="text-3xl font-extrabold md:text-4xl"
+            className="text-2xl font-extrabold sm:text-3xl md:text-4xl"
             style={{ color: "var(--c-accent)" }}
           >
             {s.n !== undefined ? (

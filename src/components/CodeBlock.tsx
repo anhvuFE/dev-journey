@@ -47,7 +47,7 @@ export default async function CodeBlock({
         </span>
       </div>
       <div
-        className="overflow-x-auto p-4 text-[13px] leading-relaxed [&_code]:font-mono [&_pre]:!m-0 [&_pre]:!bg-transparent"
+        className="overflow-x-auto p-3 text-xs leading-relaxed [-webkit-overflow-scrolling:touch] [&_code]:font-mono [&_pre]:!m-0 [&_pre]:!bg-transparent sm:p-4 sm:text-[13px]"
         dangerouslySetInnerHTML={{ __html: html }}
       />
     </div>
