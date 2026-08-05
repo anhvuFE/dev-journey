@@ -5,6 +5,7 @@ import ConstellationBg from "@/components/ConstellationBg";
 import SiteHeader from "@/components/sections/SiteHeader";
 import Hero from "@/components/sections/Hero";
 import ChaptersSection from "@/components/sections/ChaptersSection";
+import StatsSection from "@/components/sections/StatsSection";
 import SiteFooter from "@/components/sections/SiteFooter";
 
 export default async function Home({
@@ -24,6 +25,7 @@ export default async function Home({
       <main className="relative z-10 flex-1">
         <Hero />
         <ChaptersSection />
+        <StatsSection />
       </main>
       <div className="relative z-10">
         <SiteFooter />
