@@ -112,16 +112,16 @@ export default function JourneyTimeline() {
                   }}
                 />
                 <div
-                  className="absolute w-56 -translate-x-1/2 border border-l-2 border-border bg-white/[0.02] p-4 transition-transform duration-300 group-hover:-translate-y-1"
-                  style={{ top: Y0 + 28, borderLeftColor: m.accent }}
+                  className="absolute w-52 -translate-x-1/2 px-1 transition-transform duration-300 group-hover:-translate-y-1"
+                  style={{ top: Y0 + 24 }}
                 >
                   <div
-                    className="font-mono text-xl font-extrabold tabular-nums"
+                    className="font-mono text-2xl font-extrabold tabular-nums"
                     style={{ color: m.accent }}
                   >
                     {m.year}
                   </div>
-                  <div className="mt-2 text-[14px] font-semibold leading-snug">
+                  <div className="mt-2 text-[14px] font-semibold leading-snug text-foreground">
                     {m.title[locale]}
                   </div>
                 </div>
