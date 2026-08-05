@@ -21,7 +21,6 @@ export default async function ProjectList({
             key={repo.name}
             repo={repo}
             locale={locale}
-            commitsLabel={t("commits")}
             clientLabel={t("clientBadge")}
           />
         ))}
