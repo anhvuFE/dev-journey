@@ -1079,10 +1079,10 @@ public class PlayerController : MonoBehaviour
       {
         name: "Thriftly",
         privacy: "personal",
-        stack: ["Java"],
+        stack: ["Java", "Android"],
         blurb: {
-          vi: "Đồ án Java — luyện tư duy hướng đối tượng và kỷ luật kiểu dữ liệu.",
-          en: "A Java project — practicing OOP and type discipline.",
+          vi: "App Android (Java) — chợ đồ cũ / thrift. Lần đầu mình làm mobile native ngoài React Native: luyện OOP và tư duy Android.",
+          en: "An Android app (Java) — a thrift marketplace. My first native mobile outside React Native: practicing OOP and Android fundamentals.",
         },
         snippet: {
           file: "Product.java",
