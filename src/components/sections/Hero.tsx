@@ -1,10 +1,16 @@
 "use client";
 
+import { useRef } from "react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Scene3D from "@/components/three/Scene3D";
 import MagneticButton from "@/components/MagneticButton";
 import { profile } from "@/data/profile";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -13,11 +19,41 @@ export default function Hero() {
   const words = t("title").split(" ");
   const ticker = [...profile.skills, ...profile.skills];
 
+  const sectionRef = useRef<HTMLElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
+  const sceneRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      const st = {
+        trigger: sectionRef.current,
+        start: "top top",
+        end: "bottom top",
+        scrub: 0.5,
+      };
+      gsap.to(textRef.current, {
+        yPercent: -35,
+        opacity: 0,
+        ease: "none",
+        scrollTrigger: st,
+      });
+      gsap.to(sceneRef.current, {
+        yPercent: 18,
+        scale: 0.82,
+        opacity: 0.15,
+        ease: "none",
+        scrollTrigger: st,
+      });
+    },
+    { scope: sectionRef },
+  );
+
   return (
-    <section className="relative min-h-[100svh] overflow-hidden">
+    <section ref={sectionRef} className="relative min-h-[100svh] overflow-hidden">
       <div className="mx-auto grid min-h-[100svh] max-w-6xl grid-cols-1 items-center gap-4 px-5 pb-24 pt-24 md:grid-cols-12 md:gap-8 md:pb-16">
         {/* Cột chữ */}
-        <div className="order-2 md:order-1 md:col-span-7">
+        <div ref={textRef} className="order-2 md:order-1 md:col-span-7">
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -66,7 +102,10 @@ export default function Hero() {
         </div>
 
         {/* Cột Rubik 3D — tách riêng, không chồng chữ */}
-        <div className="relative order-1 h-[38vh] w-full md:order-2 md:col-span-5 md:h-[68vh]">
+        <div
+          ref={sceneRef}
+          className="relative order-1 h-[38vh] w-full md:order-2 md:col-span-5 md:h-[68vh]"
+        >
           <Scene3D accent="#c6ff3d" />
         </div>
       </div>
