@@ -121,6 +121,17 @@
   animation: marquee 26s linear infinite;
 }
 
+/* Tia sáng quét dọc đường nhịp tim (ECG) — như máy đo nhịp */
+@keyframes ecg-sweep {
+  to {
+    stroke-dashoffset: calc(-1 * var(--ecg-len, 3000px));
+  }
+}
+.ecg-sweep {
+  stroke-dasharray: 100 4000;
+  animation: ecg-sweep 4.5s linear infinite;
+}
+
 /* Mini cube 3D bằng CSS — xoay điều khiển bằng JS (mượt, ramp tốc độ) */
 .css-cube {
   transform-style: preserve-3d;
