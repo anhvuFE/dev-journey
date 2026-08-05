@@ -1102,6 +1102,27 @@ public class PlayerController : MonoBehaviour
 }`,
         },
       },
+      {
+        name: "xanhhotel",
+        privacy: "personal",
+        stack: ["C#", ".NET", "WPF"],
+        blurb: {
+          vi: "App desktop WPF (C#/.NET) quản lý khách sạn — có vai Admin & User. Lần đầu mình rời trình duyệt để làm ứng dụng desktop thật.",
+          en: "A WPF desktop app (C#/.NET) to manage a hotel — with Admin & User roles. My first time leaving the browser for a real desktop app.",
+        },
+        snippet: {
+          file: "ViewModels/RoomViewModel.cs",
+          lang: "csharp",
+          code: `public class RoomViewModel : INotifyPropertyChanged
+{
+    public ObservableCollection<Room> Rooms { get; } = new();
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+    void Raise(string name) =>
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+}`,
+        },
+      },
     ],
   },
   {

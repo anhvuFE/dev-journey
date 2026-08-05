@@ -7,7 +7,7 @@ export interface Milestone {
 
 export const timeline: Milestone[] = [
   { year: "2022", accent: "#ffb020", title: { vi: "Dòng HTML đầu tiên", en: "First lines of HTML" } },
-  { year: "2023", accent: "#ffb020", title: { vi: "Trang tĩnh, vọc CSS", en: "Static pages, playing with CSS" } },
+  { year: "2022–23", accent: "#ffb020", title: { vi: "Trang tĩnh CSS + thử Angular 13", en: "Static CSS pages + trying Angular 13" } },
   { year: "2024", accent: "#38bdf8", title: { vi: "Bước vào React & TypeScript", en: "Into React & TypeScript" } },
   { year: "2024", accent: "#ff7a29", title: { vi: "Unity (C#) + Android (Java, Thriftly)", en: "Unity (C#) + Android (Java, Thriftly)" } },
   { year: "cuối 2024", accent: "#c6ff3d", title: { vi: "LCMS — capstone FPT (C#/.NET) bắt đầu", en: "LCMS — FPT capstone (C#/.NET) begins" } },
