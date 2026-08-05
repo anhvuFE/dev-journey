@@ -29,7 +29,7 @@ export default async function AboutPage({
       <ScrollProgress />
       <SmoothScroll />
 
-      <div className="relative z-10 mx-auto max-w-4xl px-5 py-14 md:py-20">
+      <div className="relative z-10 mx-auto max-w-5xl px-5 pt-24 pb-14 md:pt-28 md:pb-20">
         <Link
           href="/"
           className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"

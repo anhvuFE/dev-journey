@@ -42,7 +42,7 @@ export default function ChapterSidebar({
   };
 
   return (
-    <aside className="md:sticky md:top-14 md:self-start">
+    <aside className="md:sticky md:top-24 md:self-start">
       <Link
         href="/#chapters"
         className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
