@@ -24,6 +24,9 @@ export default function JourneyTimeline() {
     return () => mq.removeEventListener("change", sync);
   }, []);
 
+  // Chế độ xem: "pulse" = đường nhịp tim (ECG), "heat" = lưới cường độ theo năm
+  const [mode, setMode] = useState<"pulse" | "heat">("pulse");
+
   const COL = compact ? 150 : 260; // khoảng cách giữa các "nhịp"
   const X0 = compact ? 88 : 140; // lề trái tới nhịp đầu
 
@@ -68,9 +71,30 @@ export default function JourneyTimeline() {
         <h2 className="text-3xl font-extrabold uppercase tracking-tight sm:text-5xl">
           {locale === "vi" ? "Dòng thời gian" : "The timeline"}
         </h2>
-        <span className="hidden shrink-0 font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground sm:block">
-          {locale === "vi" ? "nhịp code · kéo để đi →" : "the pulse · drag to travel →"}
-        </span>
+        <div className="flex items-center gap-3">
+          <span className="hidden shrink-0 font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground sm:block">
+            {mode === "pulse"
+              ? locale === "vi"
+                ? "nhịp code · kéo để đi →"
+                : "the pulse · drag to travel →"
+              : locale === "vi"
+                ? "cường độ theo năm"
+                : "intensity by year"}
+          </span>
+          <button
+            type="button"
+            onClick={() => setMode((m) => (m === "pulse" ? "heat" : "pulse"))}
+            className="shrink-0 border border-border px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-muted-foreground transition-colors hover:border-accent-c hover:text-accent-c"
+          >
+            {mode === "pulse"
+              ? locale === "vi"
+                ? "heatmap"
+                : "heatmap"
+              : locale === "vi"
+                ? "nhịp tim"
+                : "pulse"}
+          </button>
+        </div>
       </div>
       <div className="rule mt-6" />
 
@@ -80,7 +104,9 @@ export default function JourneyTimeline() {
         onMouseMove={onMove}
         onMouseUp={stop}
         onMouseLeave={stop}
-        className="mt-8 cursor-grab overflow-x-auto pb-4 select-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className={`mt-8 cursor-grab overflow-x-auto pb-4 select-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${
+          mode === "pulse" ? "" : "hidden"
+        }`}
       >
         <div
           className="relative"
@@ -141,6 +167,44 @@ export default function JourneyTimeline() {
           })}
         </div>
       </div>
+
+      {mode === "heat" && (
+        <div className="mt-8 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="flex min-w-max gap-3">
+            {timeline.map((m, i) => {
+              // cường độ giả lập ổn định theo mốc (2..6 ô)
+              const filled = 2 + Math.floor(Math.abs(Math.sin((i + 1) * 2.3)) * 5);
+              return (
+                <div
+                  key={i}
+                  className="flex w-14 shrink-0 flex-col items-center gap-2"
+                  title={m.title[locale]}
+                >
+                  <div className="flex flex-col-reverse gap-1">
+                    {Array.from({ length: 6 }).map((_, r) => (
+                      <span
+                        key={r}
+                        className="h-3 w-8 rounded-[2px]"
+                        style={{
+                          background: r < filled ? m.accent : "var(--border)",
+                          opacity: r < filled ? 0.4 + (r / 6) * 0.6 : 1,
+                          boxShadow: r < filled ? `0 0 6px ${m.accent}55` : undefined,
+                        }}
+                      />
+                    ))}
+                  </div>
+                  <span
+                    className="font-mono text-[10px] tabular-nums"
+                    style={{ color: m.accent }}
+                  >
+                    {m.year}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
     </section>
   );
 }

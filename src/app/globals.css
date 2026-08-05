@@ -105,6 +105,34 @@
 /* Reveal chữ kiểu mask (dùng với motion) */
 .mask { overflow: hidden; display: block; }
 
+/* Focus rõ ràng khi điều hướng bằng bàn phím (không ảnh hưởng chuột) */
+:where(a, button, [role="button"], input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--c-accent, var(--neon));
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Skip-to-content: chỉ hiện khi focus bằng Tab */
+.skip-link {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 200;
+  transform: translateY(-160%);
+  background: var(--neon);
+  color: #0a0a0a;
+  padding: 0.6rem 1rem;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  transition: transform 0.2s ease;
+}
+.skip-link:focus {
+  transform: translateY(0);
+}
+
 /* Neon nhẹ cho điểm nhấn (tiết chế) */
 .neon-glow { box-shadow: 0 0 0 1px var(--c-accent, var(--neon)) inset; }
 

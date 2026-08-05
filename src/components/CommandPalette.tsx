@@ -24,6 +24,8 @@ export default function CommandPalette() {
   const [q, setQ] = useState("");
   const [active, setActive] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const prevFocus = useRef<HTMLElement | null>(null);
   const L = locale === "vi";
 
   const items = useMemo<Item[]>(() => {
@@ -63,6 +65,7 @@ export default function CommandPalette() {
     return items.filter((it) => `${it.label} ${it.keywords}`.toLowerCase().includes(s));
   }, [q, items]);
 
+  // Mở/đóng bằng ⌘K / Ctrl+K, đóng bằng Esc
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
@@ -76,18 +79,25 @@ export default function CommandPalette() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  // Khi mở: nhớ focus cũ, khoá cuộn nền, focus input; khi đóng: khôi phục
   useEffect(() => {
-    if (open) {
-      setQ("");
-      setActive(0);
-      const t = setTimeout(() => inputRef.current?.focus(), 10);
-      return () => clearTimeout(t);
-    }
+    if (!open) return;
+    prevFocus.current = document.activeElement as HTMLElement;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    setQ("");
+    setActive(0);
+    const t = setTimeout(() => inputRef.current?.focus(), 10);
+    return () => {
+      clearTimeout(t);
+      document.body.style.overflow = prevOverflow;
+      prevFocus.current?.focus?.();
+    };
   }, [open]);
 
   useEffect(() => setActive(0), [q]);
 
-  const onKeyDown = (e: React.KeyboardEvent) => {
+  const onInputKey = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowDown") {
       e.preventDefault();
       setActive((a) => Math.min(a + 1, filtered.length - 1));
@@ -100,6 +110,24 @@ export default function CommandPalette() {
     }
   };
 
+  // Giữ Tab quẩn trong hộp thoại (focus trap tối giản)
+  const onTrapKey = (e: React.KeyboardEvent) => {
+    if (e.key !== "Tab") return;
+    const nodes = dialogRef.current?.querySelectorAll<HTMLElement>(
+      'a[href], button, input, [tabindex]:not([tabindex="-1"])',
+    );
+    if (!nodes || nodes.length === 0) return;
+    const first = nodes[0];
+    const last = nodes[nodes.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  };
+
   if (!open) return null;
 
   return (
@@ -108,17 +136,25 @@ export default function CommandPalette() {
       onClick={() => setOpen(false)}
     >
       <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label={L ? "Bảng lệnh" : "Command palette"}
+        onKeyDown={onTrapKey}
         className="w-full max-w-lg border border-border bg-[#0d0d0d] shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center gap-3 border-b border-border px-4 py-3">
-          <span className="font-mono text-xs font-bold text-accent-c">⌘K</span>
+          <span className="font-mono text-xs font-bold text-accent-c" aria-hidden>
+            ⌘K
+          </span>
           <input
             ref={inputRef}
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            onKeyDown={onKeyDown}
+            onKeyDown={onInputKey}
             spellCheck={false}
+            aria-label={L ? "Tìm trang, chương hoặc lệnh" : "Search pages, chapters or commands"}
             placeholder={L ? "Nhảy tới chương, trang, đổi ngôn ngữ…" : "Jump to a chapter, page, switch language…"}
             className="w-full bg-transparent font-mono text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
           />

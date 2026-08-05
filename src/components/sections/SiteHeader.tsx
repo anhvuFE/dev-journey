@@ -1,17 +1,31 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
+import ChapterProgress from "./ChapterProgress";
 
 export default function SiteHeader() {
   const t = useTranslations("nav");
   const locale = useLocale();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+
+  // Tự đóng menu khi đổi trang
+  useEffect(() => setOpen(false), [pathname]);
+
+  // Khoá cuộn nền khi menu mobile mở
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
 
   const links = [
     { href: "/", label: t("home") },
@@ -67,6 +81,7 @@ export default function SiteHeader() {
               {l.label}
             </Link>
           ))}
+          <ChapterProgress />
           {localeToggle}
         </nav>
 
