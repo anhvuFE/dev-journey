@@ -1,5 +1,5 @@
 import { setRequestLocale } from "next-intl/server";
-import { ArrowLeft, Mail, ExternalLink } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import Reveal from "@/components/Reveal";
 import ScrollProgress from "@/components/ScrollProgress";
@@ -53,132 +53,102 @@ export default async function AboutPage({
   const c = copy[locale];
 
   return (
-    <div
-      data-theme="growing-up"
-      className="grain relative min-h-screen"
-      style={{ background: "var(--c-bg)", color: "var(--c-fg)" }}
-    >
+    <div data-theme="growing-up" className="relative min-h-screen bg-background text-foreground">
       <ScrollProgress />
       <SmoothScroll />
-      <div
-        className="pointer-events-none fixed left-1/2 top-0 -z-0 h-[60vh] w-[80vw] -translate-x-1/2 rounded-full opacity-25 blur-[120px]"
-        style={{ background: "var(--c-glow)" }}
-      />
 
-      <div className="relative z-10 mx-auto max-w-3xl px-5 py-20">
+      <div className="mx-auto max-w-4xl px-5 py-14 md:py-20">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-sm opacity-70 transition-opacity hover:opacity-100"
+          className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
         >
           <ArrowLeft className="h-4 w-4" />
           {c.back}
         </Link>
 
-        <Reveal>
-          <p
-            className="mt-10 font-mono text-xs uppercase tracking-[0.3em]"
-            style={{ color: "var(--c-accent)" }}
-          >
+        {/* Masthead */}
+        <header className="mt-12 border-t border-border pt-8">
+          <p className="font-mono text-xs uppercase tracking-[0.25em] text-accent-c">
             {c.kicker}
           </p>
-          <h1 className="glow-text mt-4 text-4xl font-bold tracking-tight sm:text-5xl">
+          <h1 className="mt-6 text-5xl font-extrabold uppercase leading-[1.02] tracking-tight md:text-7xl">
             {profile.name}
           </h1>
-          <p className="mt-2 text-lg" style={{ color: "var(--c-accent)" }}>
+          <p className="mt-4 font-mono text-sm uppercase tracking-[0.2em] text-muted-foreground">
             {profile.title[locale]}
           </p>
-        </Reveal>
+        </header>
 
-        <div className="mt-10 space-y-5">
+        {/* Bio */}
+        <div className="mt-12 max-w-2xl space-y-5">
           {c.body.map((p, i) => (
             <Reveal key={i} delay={i * 0.05}>
-              <p
-                className="text-lg leading-relaxed"
-                style={{ color: "var(--c-muted)" }}
-              >
-                {p}
-              </p>
+              <p className="text-lg leading-relaxed text-muted-foreground">{p}</p>
             </Reveal>
+          ))}
+        </div>
+
+        {/* Số liệu — lưới hairline */}
+        <div className="mt-16 grid grid-cols-2 gap-px border border-border bg-border sm:grid-cols-4">
+          {c.stats.map((s) => (
+            <div key={s.l} className="bg-background p-6 text-center">
+              <div
+                className="text-3xl font-extrabold"
+                style={{ color: "var(--c-accent)" }}
+              >
+                {s.n}
+              </div>
+              <div className="mt-1 font-mono text-[11px] uppercase tracking-wide text-muted-foreground">
+                {s.l}
+              </div>
+            </div>
           ))}
         </div>
 
         {/* Kỹ năng */}
-        <Reveal>
-          <div className="mt-12">
-            <p
-              className="text-sm font-semibold uppercase tracking-[0.2em]"
-              style={{ color: "var(--c-accent)" }}
-            >
-              {c.skillsLabel}
-            </p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {profile.skills.map((s) => (
-                <span
-                  key={s}
-                  className="rounded-full border border-white/10 px-3 py-1 text-sm"
-                  style={{
-                    background:
-                      "color-mix(in oklab, var(--c-accent) 10%, transparent)",
-                  }}
-                >
-                  {s}
-                </span>
-              ))}
-            </div>
+        <section className="mt-16">
+          <h2 className="font-mono text-xs uppercase tracking-[0.25em] text-accent-c">
+            {c.skillsLabel}
+          </h2>
+          <div className="mt-5 flex flex-wrap gap-2">
+            {profile.skills.map((s) => (
+              <span
+                key={s}
+                className="border border-border px-3 py-1.5 font-mono text-xs uppercase tracking-wide text-muted-foreground"
+              >
+                {s}
+              </span>
+            ))}
           </div>
-        </Reveal>
-
-        {/* Số liệu */}
-        <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-4">
-          {c.stats.map((s, i) => (
-            <Reveal key={s.l} delay={i * 0.05}>
-              <div className="glow-ring rounded-2xl border border-white/10 bg-black/20 p-5 text-center">
-                <div
-                  className="text-2xl font-bold"
-                  style={{ color: "var(--c-accent)" }}
-                >
-                  {s.n}
-                </div>
-                <div className="mt-1 text-xs" style={{ color: "var(--c-muted)" }}>
-                  {s.l}
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
+        </section>
 
         {/* Liên hệ */}
-        <Reveal>
-          <div className="mt-12">
-            <p
-              className="text-sm font-semibold uppercase tracking-[0.2em]"
-              style={{ color: "var(--c-accent)" }}
-            >
-              {c.connectLabel}
-            </p>
-            <div className="mt-4 flex flex-wrap gap-3">
-              {socialLinks.map((link) => (
-                <a
-                  key={link.key}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm transition-colors hover:border-white/40"
-                >
-                  {link.key === "email" ? (
-                    <Mail className="h-4 w-4" style={{ color: "var(--c-accent)" }} />
-                  ) : (
-                    <ExternalLink
-                      className="h-4 w-4"
-                      style={{ color: "var(--c-accent)" }}
-                    />
-                  )}
+        <section className="mt-16">
+          <h2 className="font-mono text-xs uppercase tracking-[0.25em] text-accent-c">
+            {c.connectLabel}
+          </h2>
+          <div className="mt-5 grid gap-px border border-border bg-border sm:grid-cols-2">
+            {socialLinks.map((link) => (
+              <a
+                key={link.key}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center justify-between bg-background p-5 transition-colors hover:text-accent-c"
+              >
+                <span className="font-mono text-sm uppercase tracking-wide">
                   {link.label}
-                </a>
-              ))}
-            </div>
+                </span>
+                <span
+                  aria-hidden
+                  className="text-muted-foreground transition-all group-hover:translate-x-1 group-hover:text-accent-c"
+                >
+                  ↗
+                </span>
+              </a>
+            ))}
           </div>
-        </Reveal>
+        </section>
       </div>
     </div>
   );
