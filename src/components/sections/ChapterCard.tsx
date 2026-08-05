@@ -25,16 +25,29 @@ export default function ChapterCard({
     >
       <Link
         href={`/chapters/${chapter.id}`}
-        className="group flex items-center gap-6 border-b border-border py-9 md:gap-10"
+        className="group relative flex items-center gap-6 overflow-hidden border-b border-border py-10 md:gap-10"
       >
-        <span className="w-10 shrink-0 font-mono text-sm tabular-nums text-muted-foreground md:w-16 md:text-base">
+        {/* Số watermark khổng lồ ở nền */}
+        <span
+          aria-hidden
+          className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 select-none font-mono text-[6rem] font-extrabold leading-none opacity-[0.05] transition-opacity duration-500 group-hover:opacity-[0.13] md:text-[9.5rem]"
+          style={{ color: "var(--c-accent)" }}
+        >
           {num}
         </span>
 
-        <div className="min-w-0 flex-1">
+        {/* Số chương cỡ lớn màu accent */}
+        <span
+          className="relative z-10 w-12 shrink-0 font-mono text-2xl font-bold tabular-nums md:w-16 md:text-4xl"
+          style={{ color: "var(--c-accent)" }}
+        >
+          {num}
+        </span>
+
+        <div className="relative z-10 min-w-0 flex-1 transition-transform duration-300 group-hover:translate-x-1.5">
           <h3 className="inline-block text-xl font-extrabold uppercase leading-none tracking-tight md:text-4xl">
             {chapter.title[locale]}
-            {/* gạch chân accent mảnh — chỉ hiện khi hover */}
+            {/* gạch chân accent — chỉ hiện khi hover */}
             <span
               aria-hidden
               className="mt-2 block h-[2px] w-full origin-left scale-x-0 transition-transform duration-500 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:scale-x-100"
@@ -53,7 +66,7 @@ export default function ChapterCard({
 
         <span
           aria-hidden
-          className="shrink-0 text-2xl text-muted-foreground opacity-50 transition-all duration-300 group-hover:translate-x-1 group-hover:text-accent-c group-hover:opacity-100 md:text-3xl"
+          className="relative z-10 shrink-0 text-2xl text-muted-foreground opacity-50 transition-all duration-300 group-hover:translate-x-1 group-hover:text-accent-c group-hover:opacity-100 md:text-3xl"
         >
           →
         </span>
