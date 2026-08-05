@@ -2,23 +2,30 @@
 
 import { useEffect } from "react";
 import Lenis from "lenis";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-/** Cuộn mượt kiểu cinematic. Tự tắt nếu người dùng bật giảm hiệu ứng. */
+gsap.registerPlugin(ScrollTrigger);
+
+/**
+ * Cuộn mượt (Lenis) ĐỒNG BỘ với GSAP:
+ *  - lenis.raf được chạy từ gsap.ticker (một vòng lặp duy nhất)
+ *  - ScrollTrigger.update mỗi khi Lenis cuộn -> scrub không lệch nhịp, hết giật
+ * Tự tắt nếu người dùng bật giảm hiệu ứng.
+ */
 export default function SmoothScroll() {
   useEffect(() => {
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
-    let raf = 0;
-    const loop = (time: number) => {
-      lenis.raf(time);
-      raf = requestAnimationFrame(loop);
-    };
-    raf = requestAnimationFrame(loop);
+    const lenis = new Lenis({ lerp: 0.12, smoothWheel: true });
+    lenis.on("scroll", ScrollTrigger.update);
+
+    const raf = (time: number) => lenis.raf(time * 1000);
+    gsap.ticker.add(raf);
+    gsap.ticker.lagSmoothing(0);
 
     return () => {
-      cancelAnimationFrame(raf);
+      gsap.ticker.remove(raf);
       lenis.destroy();
     };
   }, []);
