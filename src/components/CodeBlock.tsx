@@ -9,6 +9,9 @@ const LANG_MAP: Record<string, string> = {
   html: "html",
   css: "css",
   json: "json",
+  csharp: "csharp",
+  "c#": "csharp",
+  java: "java",
 };
 
 // Hiển thị code THẬT có syntax highlighting (Shiki, chạy lúc build → 0 chi phí

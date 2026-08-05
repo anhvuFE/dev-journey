@@ -203,6 +203,20 @@ export const chapters: Chapter[] = [
           vi: "Landing quán cà phê — tập chia section và layout.",
           en: "A coffee-shop landing — practicing sections and layout.",
         },
+        snippet: {
+          file: "style.css",
+          lang: "css",
+          code: `.btn {
+  padding: 12px 28px;
+  background: #6f4e37; /* coffee brown */
+  color: #fff;
+  border-radius: 999px;
+  transition: transform 0.2s ease;
+}
+.btn:hover {
+  transform: translateY(-2px);
+}`,
+        },
       },
       {
         name: "backroads-app",
@@ -211,6 +225,16 @@ export const chapters: Chapter[] = [
         blurb: {
           vi: "Làm theo course — học cách dựng bố cục nhiều phần.",
           en: "A course build — learning multi-section layouts.",
+        },
+        snippet: {
+          file: "styles.css",
+          lang: "css",
+          code: `/* responsive grid — no media queries needed */
+.tours {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}`,
         },
       },
     ],
@@ -821,6 +845,24 @@ export const POST_FIRST_HOUR_HANDYMAN_SPLIT = 0.6;`,
           vi: "Nơi mình tập tành React Native từ số 0.",
           en: "Where I learned React Native from zero.",
         },
+        snippet: {
+          file: "components/Greeting.tsx",
+          lang: "tsx",
+          code: `import { View, Text, StyleSheet } from "react-native";
+
+export default function Greeting({ name }: { name: string }) {
+  return (
+    <View style={styles.box}>
+      <Text style={styles.text}>Hello, {name} 👋</Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  box: { padding: 16, alignItems: "center" },
+  text: { fontSize: 18, fontWeight: "600" },
+});`,
+        },
       },
       {
         name: "01-next-rn",
@@ -829,6 +871,18 @@ export const POST_FIRST_HOUR_HANDYMAN_SPLIT = 0.6;`,
         blurb: {
           vi: "Scaffold thử nối Next.js với React Native — mới ở giai đoạn khởi tạo.",
           en: "A scaffold exploring Next.js + React Native — still at the init stage.",
+        },
+        snippet: {
+          file: "app/[slug]/page.tsx",
+          lang: "tsx",
+          code: `export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params; // Next.js 16: params is now a Promise
+  return <h1>{slug}</h1>;
+}`,
         },
       },
     ],
@@ -1005,6 +1059,22 @@ export const POST_FIRST_HOUR_HANDYMAN_SPLIT = 0.6;`,
           vi: "Game 2D đầu tay bằng Unity — nơi mình lần đầu gặp game loop và state machine.",
           en: "My first 2D game in Unity — where I first met the game loop and state machines.",
         },
+        snippet: {
+          file: "PlayerController.cs",
+          lang: "csharp",
+          code: `using UnityEngine;
+
+public class PlayerController : MonoBehaviour
+{
+    public float speed = 5f;
+
+    void Update() // runs every frame — the game loop
+    {
+        float h = Input.GetAxis("Horizontal");
+        transform.Translate(Vector3.right * h * speed * Time.deltaTime);
+    }
+}`,
+        },
       },
       {
         name: "Thriftly",
@@ -1013,6 +1083,23 @@ export const POST_FIRST_HOUR_HANDYMAN_SPLIT = 0.6;`,
         blurb: {
           vi: "Đồ án Java — luyện tư duy hướng đối tượng và kỷ luật kiểu dữ liệu.",
           en: "A Java project — practicing OOP and type discipline.",
+        },
+        snippet: {
+          file: "Product.java",
+          lang: "java",
+          code: `public class Product {
+    private final String name;
+    private final double price;
+
+    public Product(String name, double price) {
+        this.name = name;
+        this.price = price;
+    }
+
+    public double discountedPrice(double percent) {
+        return price * (1 - percent / 100);
+    }
+}`,
         },
       },
     ],
@@ -1173,6 +1260,13 @@ export const POST_FIRST_HOUR_HANDYMAN_SPLIT = 0.6;`,
         blurb: {
           vi: "Thử làm một shop online từ đầu — bản nháp đầu tiên trước khi biết tới Shopify.",
           en: "An attempt at an online shop from scratch — my first draft before discovering Shopify.",
+        },
+        snippet: {
+          file: "cart.js",
+          lang: "js",
+          code: `// classic cart total with reduce
+const cartTotal = (items) =>
+  items.reduce((sum, item) => sum + item.price * item.qty, 0);`,
         },
       },
     ],
