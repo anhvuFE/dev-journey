@@ -1,4 +1,6 @@
+import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
+import { pageMetadata } from "@/lib/seo";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import ScrollProgress from "@/components/ScrollProgress";
@@ -10,6 +12,21 @@ import StatGrid from "@/components/about/StatGrid";
 import SkillList from "@/components/about/SkillList";
 import ContactLinks from "@/components/about/ContactLinks";
 import { aboutCopy, type Locale } from "@/data/about";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const c = aboutCopy[locale];
+  return pageMetadata({
+    locale,
+    path: "/about",
+    title: locale === "vi" ? "Về mình" : "About",
+    description: c.body[0],
+  });
+}
 
 export default async function AboutPage({
   params,
