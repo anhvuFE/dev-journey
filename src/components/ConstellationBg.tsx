@@ -29,7 +29,8 @@ export default function ConstellationBg({ color = "#38bdf8" }: { color?: string 
       canvas.width = w * dpr;
       canvas.height = h * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const n = Math.max(24, Math.min(90, Math.floor((w * h) / 18000)));
+      // cap thấp hơn để giảm phép tính O(n²) mỗi khung hình
+      const n = Math.max(20, Math.min(64, Math.floor((w * h) / 24000)));
       pts = Array.from({ length: n }, () => ({
         x: Math.random() * w,
         y: Math.random() * h,

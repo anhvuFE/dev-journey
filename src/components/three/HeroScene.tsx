@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { RoundedBox } from "@react-three/drei";
 import * as THREE from "three";
@@ -247,17 +247,34 @@ function Rubik({ accent }: { accent: string }) {
 }
 
 export default function HeroScene({ accent = "#c6ff3d" }: { accent?: string }) {
+  const wrap = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(true);
+
+  useEffect(() => {
+    const el = wrap.current;
+    if (!el) return;
+    // Tạm dừng render 3D khi hero cuộn khuất -> tiết kiệm GPU
+    const io = new IntersectionObserver(([e]) => setActive(e.isIntersecting), {
+      threshold: 0.02,
+    });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <Canvas
-      camera={{ position: [0, 0, 6], fov: 42 }}
-      dpr={[1, 1.8]}
-      gl={{ antialias: true, alpha: true }}
-    >
-      <FitView radius={FIT_RADIUS} />
-      <ambientLight intensity={0.75} />
-      <directionalLight position={[5, 6, 4]} intensity={2.2} />
-      <directionalLight position={[-4, -2, -3]} intensity={0.8} />
-      <Rubik accent={accent} />
-    </Canvas>
+    <div ref={wrap} className="h-full w-full">
+      <Canvas
+        frameloop={active ? "always" : "never"}
+        camera={{ position: [0, 0, 6], fov: 42 }}
+        dpr={[1, 1.8]}
+        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+      >
+        <FitView radius={FIT_RADIUS} />
+        <ambientLight intensity={0.75} />
+        <directionalLight position={[5, 6, 4]} intensity={2.2} />
+        <directionalLight position={[-4, -2, -3]} intensity={0.8} />
+        <Rubik accent={accent} />
+      </Canvas>
+    </div>
   );
 }
