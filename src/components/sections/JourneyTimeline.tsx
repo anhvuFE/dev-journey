@@ -45,24 +45,39 @@ export default function JourneyTimeline() {
         onMouseLeave={stop}
         className="mt-10 cursor-grab overflow-x-auto pb-4 select-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
-        <div className="relative flex w-max gap-6 pr-10">
-          {/* đường path */}
-          <div className="absolute inset-x-0 top-[7px] h-px bg-border" />
+        <div className="flex w-max gap-5 pr-10">
           {timeline.map((m, i) => (
-            <div key={i} className="group relative w-52 shrink-0 pt-4">
-              {/* node */}
+            <div key={i} className="group relative w-60 shrink-0 md:w-64">
+              {/* node + đoạn line màu theo mốc */}
+              <div className="flex items-center">
+                <span
+                  className="relative z-10 h-4 w-4 shrink-0 rounded-full border-2 border-background transition-transform duration-300 group-hover:scale-125"
+                  style={{ background: m.accent, boxShadow: `0 0 16px ${m.accent}` }}
+                />
+                <span
+                  className="h-[2px] flex-1"
+                  style={{ background: m.accent, opacity: 0.35 }}
+                />
+              </div>
+
+              {/* connector dọc xuống card */}
               <span
-                className="absolute left-0 top-[7px] h-3.5 w-3.5 -translate-y-1/2 rounded-full border-2 border-background transition-transform duration-300 group-hover:scale-125"
-                style={{ background: m.accent, boxShadow: `0 0 14px ${m.accent}` }}
+                className="ml-[7px] block h-6 w-px"
+                style={{ background: m.accent, opacity: 0.25 }}
               />
-              <div className="mt-5">
+
+              {/* card */}
+              <div
+                className="border border-l-2 border-border bg-white/[0.02] p-5 transition-transform duration-300 group-hover:-translate-y-1"
+                style={{ borderLeftColor: m.accent }}
+              >
                 <div
-                  className="font-mono text-xs uppercase tracking-wider"
+                  className="font-mono text-xl font-extrabold tabular-nums md:text-2xl"
                   style={{ color: m.accent }}
                 >
                   {m.year}
                 </div>
-                <div className="mt-2 text-sm font-semibold leading-snug">
+                <div className="mt-2.5 text-[15px] font-semibold leading-snug">
                   {m.title[locale]}
                 </div>
               </div>
