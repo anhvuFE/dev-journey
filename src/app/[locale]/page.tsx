@@ -4,6 +4,7 @@ import ScrollProgress from "@/components/ScrollProgress";
 import ConstellationBg from "@/components/ConstellationBg";
 import SiteHeader from "@/components/sections/SiteHeader";
 import Hero from "@/components/sections/Hero";
+import JourneyTimeline from "@/components/sections/JourneyTimeline";
 import ChaptersSection from "@/components/sections/ChaptersSection";
 import StatsSection from "@/components/sections/StatsSection";
 import SiteFooter from "@/components/sections/SiteFooter";
@@ -24,6 +25,7 @@ export default async function Home({
       <SiteHeader />
       <main className="relative z-10 flex-1">
         <Hero />
+        <JourneyTimeline />
         <ChaptersSection />
         <StatsSection />
       </main>
