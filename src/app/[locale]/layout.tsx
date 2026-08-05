@@ -5,6 +5,9 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import SiteHeader from "@/components/sections/SiteHeader";
+import CommandPalette from "@/components/CommandPalette";
+import TerminalEasterEgg from "@/components/TerminalEasterEgg";
+import NeonCursor from "@/components/NeonCursor";
 import "../globals.css";
 
 // Sans grotesk (chất modern) — hỗ trợ tiếng Việt đầy đủ.
@@ -59,8 +62,11 @@ export default async function LocaleLayout({
     >
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <NextIntlClientProvider>
+          <NeonCursor />
           <SiteHeader />
           {children}
+          <CommandPalette />
+          <TerminalEasterEgg />
         </NextIntlClientProvider>
       </body>
     </html>
