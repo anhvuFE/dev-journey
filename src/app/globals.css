@@ -141,6 +141,52 @@
   transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* ------------------------------------------------------------
+   Con trỏ neon (chấm bám + vòng sáng trôi theo). Chỉ hiện trên
+   thiết bị có con trỏ chính xác (chuột/trackpad).
+   ------------------------------------------------------------ */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  border-radius: 9999px;
+  will-change: transform;
+}
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  background: var(--neon);
+  z-index: 95;
+}
+.cursor-ring {
+  width: 34px;
+  height: 34px;
+  margin: -17px 0 0 -17px;
+  border: 1px solid color-mix(in oklab, var(--neon) 70%, transparent);
+  box-shadow: 0 0 8px color-mix(in oklab, var(--neon) 35%, transparent);
+  z-index: 94;
+  transition:
+    width 0.2s ease,
+    height 0.2s ease,
+    margin 0.2s ease,
+    background 0.2s ease;
+}
+.cursor-ring--active {
+  width: 56px;
+  height: 56px;
+  margin: -28px 0 0 -28px;
+  background: color-mix(in oklab, var(--neon) 12%, transparent);
+}
+@media (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+}
+
 .grain::before {
   content: "";
   position: absolute;
