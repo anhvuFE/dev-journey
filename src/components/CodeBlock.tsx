@@ -1,7 +1,19 @@
-// Hiển thị đoạn code thật (mono, nền tối, có nhãn tên file + chấm accent).
-// Không dùng thư viện highlight để nhẹ; style tối giản, hợp tông studio.
+import { codeToHtml } from "shiki";
 
-export default function CodeBlock({
+const LANG_MAP: Record<string, string> = {
+  tsx: "tsx",
+  ts: "ts",
+  js: "js",
+  jsx: "jsx",
+  go: "go",
+  html: "html",
+  css: "css",
+  json: "json",
+};
+
+// Hiển thị code THẬT có syntax highlighting (Shiki, chạy lúc build → 0 chi phí
+// client). Khung cửa sổ có tên file + chấm accent theo theme chương.
+export default async function CodeBlock({
   code,
   file,
   lang = "tsx",
@@ -10,6 +22,11 @@ export default function CodeBlock({
   file?: string;
   lang?: string;
 }) {
+  const html = await codeToHtml(code, {
+    lang: LANG_MAP[lang] ?? "tsx",
+    theme: "tokyo-night",
+  });
+
   return (
     <div className="my-6 overflow-hidden border border-border bg-[#0d0d0d]">
       <div className="flex items-center justify-between border-b border-border px-4 py-2.5">
@@ -26,9 +43,10 @@ export default function CodeBlock({
           {lang}
         </span>
       </div>
-      <pre className="overflow-x-auto p-4 text-[13px] leading-relaxed">
-        <code className="font-mono text-foreground/90">{code}</code>
-      </pre>
+      <div
+        className="overflow-x-auto p-4 text-[13px] leading-relaxed [&_code]:font-mono [&_pre]:!m-0 [&_pre]:!bg-transparent"
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
     </div>
   );
 }

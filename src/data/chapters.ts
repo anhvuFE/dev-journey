@@ -165,11 +165,11 @@ export const chapters: Chapter[] = [
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
-    <title>Nhà sách của mình</title>
+    <title>My Bookstore</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>Xin chào thế giới 📚</h1>
+    <h1>Hello, world 📚</h1>
   </body>
 </html>`,
         },
@@ -185,12 +185,12 @@ export const chapters: Chapter[] = [
         snippet: {
           file: "style.css",
           lang: "css",
-          code: `/* Trận chiến 2 tiếng: căn giữa một cái div.
-   Chìa khoá mình ước gì biết sớm hơn: Flexbox */
+          code: `/* The 2-hour battle: centering a div.
+   The key I wish I'd known sooner: Flexbox */
 .hero {
   display: flex;
-  justify-content: center; /* căn ngang */
-  align-items: center;     /* căn dọc */
+  justify-content: center; /* horizontal */
+  align-items: center;     /* vertical */
   min-height: 100vh;
 }`,
         },
@@ -325,13 +325,13 @@ export const chapters: Chapter[] = [
           file: "src/App.tsx",
           lang: "tsx",
           code: `const [showIntro] = useState<boolean>(() => {
-  if (typeof window === "undefined") return false; // an toàn khi SSR
+  if (typeof window === "undefined") return false; // safe during SSR
   try {
     const seen = localStorage.getItem(INTRO_SEEN_KEY);
     const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
     return !seen && !reduced;
   } catch {
-    return false; // incognito có thể ném lỗi
+    return false; // incognito may throw
   }
 });`,
         },
@@ -406,7 +406,7 @@ export const chapters: Chapter[] = [
 declare global {
   var prismaGlobal: PrismaClient;
 }
-// dev: dùng lại một client toàn cục để không rò rỉ kết nối khi hot-reload
+// dev: reuse one global client to avoid connection leaks on hot-reload
 if (process.env.NODE_ENV !== "production") {
   if (!global.prismaGlobal) global.prismaGlobal = new PrismaClient();
 }
@@ -531,7 +531,7 @@ export default prisma;`,
         snippet: {
           file: "src/stores/cartStore.ts",
           lang: "ts",
-          code: `// mỗi item mang metadata thời gian để tối ưu & debug re-render
+          code: `// each item carries time metadata to optimize & debug re-renders
 export interface CartItem {
   id: string;
   serviceId: string;
@@ -654,7 +654,7 @@ export interface CartItem {
     if (error.message === "TOKEN_EXPIRED" && retryCount < MAX_RETRIES) {
       const t = await getNewAccessToken();
       setAccessToken(t.accessToken);
-      return apiRequest(endpoint, options, retryCount + 1); // gọi lại
+      return apiRequest(endpoint, options, retryCount + 1); // retry
     }
     throw error;
   }
@@ -772,7 +772,7 @@ export interface CartItem {
           file: "fe/App.tsx",
           lang: "tsx",
           code: `await ScreenShield.unshieldFor(minutes);
-// native chưa tự re-shield nếu thiếu DeviceActivityMonitor extension
+// native won't auto re-shield without a DeviceActivityMonitor extension
 reshieldTimer = setTimeout(() => {
   ScreenShield.shieldNow().catch(() => {});
   refetchBank();
@@ -808,7 +808,7 @@ reshieldTimer = setTimeout(() => {
           lang: "ts",
           code: `export const HOURLY_RATE = 75;
 export const BLOCK_MINUTES = 15;
-export const BLOCK_RATE = HOURLY_RATE / 4; // đừng gõ cứng 18.75
+export const BLOCK_RATE = HOURLY_RATE / 4; // don't hardcode 18.75
 export const MINIMUM_BILLABLE_MINUTES = 60;
 export const POST_FIRST_HOUR_HANDYMAN_SPLIT = 0.6;`,
         },
@@ -951,7 +951,7 @@ export const POST_FIRST_HOUR_HANDYMAN_SPLIT = 0.6;`,
           code: `type pendingEntry struct {
     ch    chan BridgeResponse
     timer *time.Timer
-    once  sync.Once // chặn close/send đồng thời -> hết panic
+    once  sync.Once // guards concurrent close/send -> no panic
 }`,
         },
       },
@@ -1160,7 +1160,7 @@ export const POST_FIRST_HOUR_HANDYMAN_SPLIT = 0.6;`,
           file: "app/routes/app.orders.tsx",
           lang: "ts",
           code: `export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const { admin, session } = await authenticate.admin(request); // luôn auth TRƯỚC
+  const { admin, session } = await authenticate.admin(request); // always auth FIRST
   // ... query Shopify Admin API qua admin.graphql(...)
   return json({ shop: session.shop });
 };`,
@@ -1357,7 +1357,7 @@ export const POST_FIRST_HOUR_HANDYMAN_SPLIT = 0.6;`,
   const [time, setTime] = useState(calculate(target));
   useEffect(() => {
     const id = setInterval(() => setTime(calculate(target)), 1000);
-    return () => clearInterval(id); // dọn khi component biến mất
+    return () => clearInterval(id); // clean up on unmount
   }, [target]);
   return time;
 }`,
