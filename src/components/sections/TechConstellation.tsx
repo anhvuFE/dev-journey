@@ -5,12 +5,12 @@ import { useLocale } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { chapters } from "@/data/chapters";
 
-// Bản đồ công nghệ dạng chòm sao. Nhiều tech nên dùng LƯỚI đều (jitter nhẹ) để
-// các chấm không dít vào nhau; NHÃN chỉ hiện khi di chuột -> không đè nhau.
-// Bấm 1 sao -> mở /projects đã lọc theo tech đó.
-const W = 1200;
-const H = 680;
-
+// Bản đồ công nghệ dạng chòm sao: chỉ lấy ~20 công nghệ dùng nhiều nhất cho
+// thoáng; chấm to theo số dự án, nối bằng đường rõ; nhãn hiện khi di chuột.
+// Bấm 1 sao -> /projects lọc theo tech đó.
+const W = 1000;
+const H = 560;
+const TOP = 20;
 const rand = (i: number) => Math.abs(Math.sin(i * 12.9898) * 43758.5453) % 1;
 
 export default function TechConstellation() {
@@ -22,7 +22,7 @@ export default function TechConstellation() {
     chapters.forEach((c) =>
       c.repos.forEach((r) => r.stack.forEach((s) => count.set(s, (count.get(s) ?? 0) + 1))),
     );
-    const list = [...count.entries()].sort((a, b) => b[1] - a[1]);
+    const list = [...count.entries()].sort((a, b) => b[1] - a[1]).slice(0, TOP);
     const N = list.length;
     const cols = Math.ceil(Math.sqrt(N * (W / H)));
     const rows = Math.ceil(N / cols);
@@ -31,14 +31,14 @@ export default function TechConstellation() {
     return list.map(([name, n], i) => {
       const col = i % cols;
       const row = Math.floor(i / cols);
-      const jx = (rand(i + 1) - 0.5) * cw * 0.55;
-      const jy = (rand(i + 50) - 0.5) * ch * 0.55;
+      const jx = (rand(i + 1) - 0.5) * cw * 0.5;
+      const jy = (rand(i + 50) - 0.5) * ch * 0.5;
       return {
         name,
         n,
         x: col * cw + cw / 2 + jx,
         y: row * ch + ch / 2 + jy,
-        r: 5 + Math.min(n, 6),
+        r: 7 + Math.min(n, 12) * 1.1,
       };
     });
   }, []);
@@ -75,8 +75,8 @@ export default function TechConstellation() {
           x2={nodes[e.b].x}
           y2={nodes[e.b].y}
           stroke="var(--neon)"
-          strokeWidth={0.6}
-          opacity={0.14}
+          strokeWidth={1.4}
+          opacity={0.32}
         />
       ))}
       {nodes.map((nd) => (
@@ -86,21 +86,20 @@ export default function TechConstellation() {
           data-cursor
           onClick={() => router.push(`/projects?tech=${encodeURIComponent(nd.name)}`)}
         >
-          {/* vùng bấm rộng hơn cho dễ trúng + hover */}
-          <circle cx={nd.x} cy={nd.y} r={22} fill="transparent" />
+          <circle cx={nd.x} cy={nd.y} r={nd.r + 16} fill="transparent" />
           <circle
             cx={nd.x}
             cy={nd.y}
             r={nd.r}
             fill="var(--neon)"
             className="transition-all duration-200 group-hover:brightness-150"
-            style={{ filter: "drop-shadow(0 0 6px color-mix(in oklab, var(--neon) 55%, transparent))" }}
+            style={{ filter: "drop-shadow(0 0 8px color-mix(in oklab, var(--neon) 60%, transparent))" }}
           />
           <text
             x={nd.x}
-            y={nd.y - nd.r - 9}
+            y={nd.y - nd.r - 10}
             textAnchor="middle"
-            style={{ fill: "var(--foreground)", fontSize: 14 }}
+            style={{ fill: "var(--foreground)", fontSize: 15 }}
             className="pointer-events-none font-mono uppercase opacity-0 transition-opacity duration-150 group-hover:opacity-100"
           >
             {nd.name}
