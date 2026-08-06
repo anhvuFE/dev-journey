@@ -13,6 +13,7 @@ import ConstellationBg from "@/components/ConstellationBg";
 import ChapterSidebar from "@/components/chapter/ChapterSidebar";
 import KeyboardChapterNav from "@/components/chapter/KeyboardChapterNav";
 import MarkChapterRead from "@/components/chapter/MarkChapterRead";
+import FocusModeToggle from "@/components/chapter/FocusModeToggle";
 import LessonList from "@/components/chapter/LessonList";
 import TipsGrid from "@/components/chapter/TipsGrid";
 import ProjectList from "@/components/chapter/ProjectList";
@@ -101,6 +102,7 @@ export default async function ChapterPage({
       <SmoothScroll />
       <KeyboardChapterNav prevId={prev?.id} nextId={next?.id} />
       <MarkChapterRead id={chapter.id} />
+      <FocusModeToggle />
 
       <div className="relative z-10 mx-auto max-w-6xl px-5 pt-24 pb-14 md:pt-28 md:pb-20">
         <div className="md:grid md:grid-cols-[240px_1fr] md:gap-14 lg:gap-20">

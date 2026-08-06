@@ -215,6 +215,14 @@
   }
 }
 
+/* Chế độ đọc tập trung: ẩn header, nền chòm sao, con trỏ neon */
+html.focus-reading header,
+html.focus-reading [data-focus-hide],
+html.focus-reading .cursor-dot,
+html.focus-reading .cursor-ring {
+  display: none !important;
+}
+
 /* Toast ăn mừng trượt lên */
 @keyframes toast-in {
   from { opacity: 0; transform: translateY(16px); }
