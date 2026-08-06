@@ -37,6 +37,7 @@ export default function CommandPalette() {
       { id: "home", label: L ? "Trang chủ" : "Home", hint: "/", keywords: "home trang chu index", run: go("/") },
       { id: "projects", label: L ? "Dự án" : "Projects", hint: "/projects", keywords: "projects du an kho du an portfolio", run: go("/projects") },
       { id: "about", label: L ? "Về mình" : "About", hint: "/about", keywords: "about ve minh gioi thieu profile", run: go("/about") },
+      { id: "cv", label: "CV / Résumé", hint: "/cv", keywords: "cv resume ho so nang luc print pdf", run: go("/cv") },
     ];
     const chs: Item[] = chapters.map((c) => ({
       id: c.id,

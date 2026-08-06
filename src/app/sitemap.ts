@@ -6,7 +6,7 @@ import { SITE_URL } from "@/lib/seo";
 /** Sitemap song ngữ: trang chủ, About, và 7 chương × (vi, en), kèm hreflang. */
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  const paths = ["", "/about", "/projects", ...chapters.map((c) => `/chapters/${c.id}`)];
+  const paths = ["", "/about", "/projects", "/cv", ...chapters.map((c) => `/chapters/${c.id}`)];
 
   return paths.flatMap((path) =>
     routing.locales.map((locale) => ({
