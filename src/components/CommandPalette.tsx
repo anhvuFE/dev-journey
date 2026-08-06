@@ -177,7 +177,7 @@ export default function CommandPalette() {
                   )}
                 >
                   <span className="truncate">{it.label}</span>
-                  <span className="shrink-0 text-[11px] text-muted-foreground/50">{it.hint}</span>
+                  <span className="shrink-0 text-[11px] text-muted-foreground">{it.hint}</span>
                 </button>
               </li>
             ))

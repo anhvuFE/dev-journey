@@ -57,7 +57,7 @@ export default function ChapterCard({
           <p className="mt-3 max-w-xl text-sm text-muted-foreground md:text-[15px]">
             {chapter.tagline[locale]}
           </p>
-          <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground/60">
+          <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
             {chapter.repos.slice(0, 4).map((r) => (
               <span key={r.name}>{r.name}</span>
             ))}

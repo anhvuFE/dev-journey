@@ -22,14 +22,14 @@ export default async function SiteFooter() {
           ))}
         </div>
         <p className="mt-5">{t("madeWith")}</p>
-        <p className="mt-4 font-mono text-[11px] text-muted-foreground/50">
+        <p className="mt-4 font-mono text-[11px] text-muted-foreground">
           <kbd className="rounded-[3px] border border-border px-1.5 py-0.5">⌘K</kbd>{" "}
           {L ? "lệnh" : "commands"} ·{" "}
           <kbd className="rounded-[3px] border border-border px-1.5 py-0.5">`</kbd>{" "}
           terminal · <span className="tracking-widest">← →</span>{" "}
           {L ? "chuyển chương" : "switch chapters"}
         </p>
-        <p className="mt-3 font-mono text-xs opacity-60">© {"2026"} · dev/journey</p>
+        <p className="mt-3 font-mono text-xs text-muted-foreground">© {"2026"} · dev/journey</p>
       </div>
     </footer>
   );

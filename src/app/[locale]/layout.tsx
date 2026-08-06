@@ -6,10 +6,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { SITE_URL, SITE_NAME } from "@/lib/seo";
 import SiteHeader from "@/components/sections/SiteHeader";
-import CommandPalette from "@/components/CommandPalette";
-import TerminalEasterEgg from "@/components/TerminalEasterEgg";
-import NeonCursor from "@/components/NeonCursor";
-import BackToTop from "@/components/BackToTop";
+import ClientEnhancements from "@/components/ClientEnhancements";
 import "../globals.css";
 
 // Sans grotesk (chất modern) — hỗ trợ tiếng Việt đầy đủ.
@@ -99,16 +96,16 @@ export default async function LocaleLayout({
       className={`${fontSans.variable} ${fontMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-background text-foreground">
+        {/* Kết nối sớm tới API lịch đóng góp GitHub (dùng ở trang chủ) */}
+        <link rel="preconnect" href="https://github-contributions-api.jogruber.de" />
+        <link rel="dns-prefetch" href="https://github-contributions-api.jogruber.de" />
         <NextIntlClientProvider>
           <a href="#main" className="skip-link">
             {locale === "vi" ? "Tới nội dung" : "Skip to content"}
           </a>
-          <NeonCursor />
           <SiteHeader />
           {children}
-          <BackToTop />
-          <CommandPalette />
-          <TerminalEasterEgg />
+          <ClientEnhancements />
         </NextIntlClientProvider>
       </body>
     </html>
