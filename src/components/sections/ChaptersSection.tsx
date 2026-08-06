@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { chapters } from "@/data/chapters";
 import ChapterCard from "./ChapterCard";
+import ContinueReading from "./ContinueReading";
 
 export default async function ChaptersSection() {
   const t = await getTranslations("chapters");
@@ -17,6 +18,8 @@ export default async function ChaptersSection() {
       </div>
 
       <div className="rule mt-6" />
+
+      <ContinueReading />
 
       <ol>
         {chapters.map((chapter, i) => (

@@ -9,12 +9,14 @@ export default function ChapterSidebar({
   num,
   title,
   mood,
+  readingTime,
   backLabel,
   sections,
 }: {
   num: string;
   title: string;
   mood: string;
+  readingTime?: string;
   backLabel: string;
   sections: { id: string; label: string }[];
 }) {
@@ -63,6 +65,9 @@ export default function ChapterSidebar({
       <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
         {mood}
       </p>
+      {readingTime ? (
+        <p className="mt-2 font-mono text-[11px] text-muted-foreground">{readingTime}</p>
+      ) : null}
 
       {/* Nav mục cho mobile: hàng chip cuộn ngang */}
       <nav className="mt-6 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] md:hidden [&::-webkit-scrollbar]:hidden">
