@@ -1,4 +1,5 @@
 import { codeToHtml } from "shiki";
+import CopyButton from "@/components/CopyButton";
 
 const LANG_MAP: Record<string, string> = {
   tsx: "tsx",
@@ -42,9 +43,12 @@ export default async function CodeBlock({
             {file ?? lang}
           </span>
         </div>
-        <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-          {lang}
-        </span>
+        <div className="flex items-center gap-4">
+          <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+            {lang}
+          </span>
+          <CopyButton code={code} />
+        </div>
       </div>
       <div
         className="overflow-x-auto p-3 text-xs leading-relaxed [-webkit-overflow-scrolling:touch] [&_code]:font-mono [&_pre]:!m-0 [&_pre]:!bg-transparent sm:p-4 sm:text-[13px]"
