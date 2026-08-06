@@ -17,6 +17,7 @@ import LessonList from "@/components/chapter/LessonList";
 import TipsGrid from "@/components/chapter/TipsGrid";
 import ProjectList from "@/components/chapter/ProjectList";
 import NextChapterLink from "@/components/chapter/NextChapterLink";
+import Comments from "@/components/chapter/Comments";
 
 export function generateStaticParams() {
   return chapters.map((c) => ({ id: c.id }));
@@ -139,6 +140,8 @@ export default async function ChapterPage({
             </div>
 
             {next ? <NextChapterLink next={next} locale={locale} /> : null}
+
+            <Comments />
           </div>
         </div>
       </div>
