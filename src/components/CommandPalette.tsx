@@ -59,11 +59,52 @@ export default function CommandPalette() {
     return [...nav, ...chs, ...langs];
   }, [L, locale, pathname, router]);
 
+  // Chỉ mục nội dung: câu chuyện, bài học, mẹo trong mọi chương -> nhảy tới đúng mục
+  const contentItems = useMemo<Item[]>(() => {
+    const sectionLabel = (s: string) =>
+      s === "story"
+        ? L ? "Câu chuyện" : "Story"
+        : s === "lessons"
+          ? L ? "Bài học" : "Lessons"
+          : L ? "Mẹo" : "Tips";
+    const out: Item[] = [];
+    const add = (c: (typeof chapters)[number], section: string, text?: string) => {
+      if (!text) return;
+      out.push({
+        id: `${c.id}-${section}-${out.length}`,
+        label: text.length > 72 ? text.slice(0, 72) + "…" : text,
+        hint: `${String(c.order).padStart(2, "0")} · ${sectionLabel(section)}`,
+        keywords: `${text} ${c.title.vi} ${c.title.en}`,
+        run: () => {
+          setOpen(false);
+          router.push(`/chapters/${c.id}#${section}`);
+        },
+      });
+    };
+    for (const c of chapters) {
+      add(c, "story", c.intro?.[locale]);
+      c.story[locale].forEach((p) => add(c, "story", p));
+      c.lessons.forEach((l) => {
+        add(c, "lessons", l.title[locale]);
+        add(c, "lessons", l.body[locale]);
+      });
+      c.tips?.forEach((t) => {
+        add(c, "tips", t.title[locale]);
+        add(c, "tips", t.body[locale]);
+      });
+    }
+    return out;
+  }, [L, locale, router]);
+
   const filtered = useMemo(() => {
     const s = q.trim().toLowerCase();
     if (!s) return items;
-    return items.filter((it) => `${it.label} ${it.keywords}`.toLowerCase().includes(s));
-  }, [q, items]);
+    const base = items.filter((it) => `${it.label} ${it.keywords}`.toLowerCase().includes(s));
+    const content = contentItems
+      .filter((it) => it.keywords.toLowerCase().includes(s))
+      .slice(0, 8);
+    return [...base, ...content];
+  }, [q, items, contentItems]);
 
   // Mở/đóng bằng ⌘K / Ctrl+K, đóng bằng Esc
   useEffect(() => {
