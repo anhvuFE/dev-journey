@@ -32,7 +32,7 @@ export default function ProjectArticle({
             </span>
           ))}
           {repo.privacy === "client" ? (
-            <span className="px-2 py-0.5 font-mono text-[10px] uppercase tracking-wide text-muted-foreground/60">
+            <span className="px-2 py-0.5 font-mono text-[10px] uppercase tracking-wide text-muted-foreground">
               · {clientLabel}
             </span>
           ) : null}

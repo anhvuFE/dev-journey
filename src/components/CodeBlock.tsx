@@ -42,7 +42,7 @@ export default async function CodeBlock({
             {file ?? lang}
           </span>
         </div>
-        <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground/60">
+        <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
           {lang}
         </span>
       </div>
