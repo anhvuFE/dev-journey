@@ -224,6 +224,29 @@
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
+/* In ấn (trang CV): ẩn chrome tối, nền trắng sạch */
+@media print {
+  header,
+  .cursor-dot,
+  .cursor-ring,
+  [data-noprint] {
+    display: none !important;
+  }
+  html,
+  body {
+    background: #fff !important;
+  }
+  .cv-page {
+    background: #fff !important;
+    padding: 0 !important;
+  }
+  .cv-sheet {
+    box-shadow: none !important;
+    max-width: none !important;
+    margin: 0 !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

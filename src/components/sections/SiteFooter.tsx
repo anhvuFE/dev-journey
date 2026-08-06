@@ -1,4 +1,5 @@
 import { getLocale, getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { socialLinks, profile } from "@/data/profile";
 
 export default async function SiteFooter() {
@@ -20,6 +21,9 @@ export default async function SiteFooter() {
               {link.label}
             </a>
           ))}
+          <Link href="/cv" className="transition-colors hover:text-foreground">
+            {L ? "CV / Hồ sơ" : "CV / Résumé"}
+          </Link>
         </div>
         <p className="mt-5">{t("madeWith")}</p>
         <p className="mt-4 font-mono text-[11px] text-muted-foreground">
