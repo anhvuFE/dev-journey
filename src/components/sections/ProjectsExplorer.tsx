@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 
@@ -24,6 +24,11 @@ export default function ProjectsExplorer({
 }) {
   const L = useLocale() === "vi";
   const [tech, setTech] = useState<string | null>(initialTech);
+
+  // Đồng bộ khi mở /projects?tech=… (vd bấm từ bản đồ công nghệ)
+  useEffect(() => {
+    setTech(initialTech);
+  }, [initialTech]);
   const [type, setType] = useState<"all" | "personal" | "client">("all");
 
   const techs = useMemo(() => {
