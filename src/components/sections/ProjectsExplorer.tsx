@@ -15,9 +15,15 @@ export interface Proj {
   accent: string;
 }
 
-export default function ProjectsExplorer({ projects }: { projects: Proj[] }) {
+export default function ProjectsExplorer({
+  projects,
+  initialTech = null,
+}: {
+  projects: Proj[];
+  initialTech?: string | null;
+}) {
   const L = useLocale() === "vi";
-  const [tech, setTech] = useState<string | null>(null);
+  const [tech, setTech] = useState<string | null>(initialTech);
   const [type, setType] = useState<"all" | "personal" | "client">("all");
 
   const techs = useMemo(() => {

@@ -6,6 +6,7 @@ import { chapters } from "@/data/chapters";
 import { pageMetadata } from "@/lib/seo";
 import ConstellationBg from "@/components/ConstellationBg";
 import ProjectsExplorer, { type Proj } from "@/components/sections/ProjectsExplorer";
+import TechConstellation from "@/components/sections/TechConstellation";
 
 type Locale = "vi" | "en";
 
@@ -28,10 +29,13 @@ export async function generateMetadata({
 
 export default async function ProjectsPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: Locale }>;
+  searchParams: Promise<{ tech?: string }>;
 }) {
   const { locale } = await params;
+  const { tech } = await searchParams;
   setRequestLocale(locale);
   const L = locale === "vi";
 
@@ -80,7 +84,16 @@ export default async function ProjectsPage({
         </header>
 
         <div className="mt-10">
-          <ProjectsExplorer projects={projects} />
+          <p className="font-mono text-xs uppercase tracking-[0.25em] text-accent-c">
+            {L ? "Bản đồ công nghệ · bấm để lọc" : "Tech map · tap to filter"}
+          </p>
+          <div className="mt-4">
+            <TechConstellation />
+          </div>
+        </div>
+
+        <div className="mt-10">
+          <ProjectsExplorer projects={projects} initialTech={tech ?? null} />
         </div>
       </div>
     </div>
