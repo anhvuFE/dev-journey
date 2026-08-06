@@ -11,6 +11,7 @@ import AboutIntro from "@/components/about/AboutIntro";
 import StatGrid from "@/components/about/StatGrid";
 import SkillList from "@/components/about/SkillList";
 import ContactLinks from "@/components/about/ContactLinks";
+import ContactForm from "@/components/about/ContactForm";
 import { aboutCopy, type Locale } from "@/data/about";
 
 export async function generateMetadata({
@@ -62,6 +63,7 @@ export default async function AboutPage({
         <SkillList label={c.skillsLabel} />
         <Certificates />
         <ContactLinks label={c.connectLabel} />
+        <ContactForm label={locale === "vi" ? "Gửi lời nhắn" : "Send a message"} />
       </div>
     </div>
   );
