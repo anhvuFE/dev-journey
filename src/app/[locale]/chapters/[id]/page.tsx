@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { chapters, getChapter } from "@/data/chapters";
 import { pageMetadata, SITE_URL, SITE_NAME } from "@/lib/seo";
+import { readingMinutes } from "@/lib/reading";
 import { profile } from "@/data/profile";
 import JsonLd from "@/components/JsonLd";
 import SmoothScroll from "@/components/SmoothScroll";
@@ -54,6 +55,8 @@ export default async function ChapterPage({
   const next = chapters[idx + 1];
   const num = String(chapter.order).padStart(2, "0");
   const L = locale === "vi";
+  const rt = readingMinutes(chapter, locale);
+  const readingLabel = L ? `≈ ${rt} phút đọc` : `≈ ${rt} min read`;
   const hasTips = Boolean(chapter.tips && chapter.tips.length);
 
   const jsonLd = {
@@ -104,6 +107,7 @@ export default async function ChapterPage({
             num={num}
             title={chapter.title[locale]}
             mood={chapter.theme.mood[locale]}
+            readingTime={readingLabel}
             backLabel={back("backHome")}
             sections={sections}
           />
