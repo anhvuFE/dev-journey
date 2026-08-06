@@ -5,6 +5,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { SITE_URL, SITE_NAME } from "@/lib/seo";
+import { Analytics } from "@vercel/analytics/next";
 import SiteHeader from "@/components/sections/SiteHeader";
 import ClientEnhancements from "@/components/ClientEnhancements";
 import "../globals.css";
@@ -106,6 +107,7 @@ export default async function LocaleLayout({
           <SiteHeader />
           {children}
           <ClientEnhancements />
+          <Analytics />
         </NextIntlClientProvider>
       </body>
     </html>
