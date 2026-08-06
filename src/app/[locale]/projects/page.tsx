@@ -85,7 +85,7 @@ export default async function ProjectsPage({
 
         <div className="mt-10">
           <p className="font-mono text-xs uppercase tracking-[0.25em] text-accent-c">
-            {L ? "Bản đồ công nghệ · bấm để lọc" : "Tech map · tap to filter"}
+            {L ? "Bản đồ công nghệ · di chuột xem tên · bấm để lọc" : "Tech map · hover for name · tap to filter"}
           </p>
           <div className="mt-4">
             <TechConstellation />
