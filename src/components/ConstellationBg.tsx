@@ -96,6 +96,7 @@ export default function ConstellationBg({ color = "#38bdf8" }: { color?: string 
     <canvas
       ref={ref}
       aria-hidden
+      data-focus-hide
       className="pointer-events-none fixed inset-0 z-0 h-full w-full"
       style={{ opacity: 0.55 }}
     />
