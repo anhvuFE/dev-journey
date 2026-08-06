@@ -5,11 +5,13 @@ import { useLocale } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { chapters } from "@/data/chapters";
 
-// Bản đồ công nghệ dạng chòm sao: mỗi công nghệ là 1 ngôi sao (to theo số dự án
-// dùng nó), nối nhau bằng đường mờ; bấm 1 sao -> mở /projects đã lọc theo tech đó.
-const W = 1000;
-const H = 460;
-const PAD = 100;
+// Bản đồ công nghệ dạng chòm sao. Nhiều tech nên dùng LƯỚI đều (jitter nhẹ) để
+// các chấm không dít vào nhau; NHÃN chỉ hiện khi di chuột -> không đè nhau.
+// Bấm 1 sao -> mở /projects đã lọc theo tech đó.
+const W = 1200;
+const H = 680;
+
+const rand = (i: number) => Math.abs(Math.sin(i * 12.9898) * 43758.5453) % 1;
 
 export default function TechConstellation() {
   const L = useLocale() === "vi";
@@ -17,11 +19,27 @@ export default function TechConstellation() {
 
   const nodes = useMemo(() => {
     const count = new Map<string, number>();
-    chapters.forEach((c) => c.repos.forEach((r) => r.stack.forEach((s) => count.set(s, (count.get(s) ?? 0) + 1))));
-    return [...count.entries()].map(([name, n], i) => {
-      const rx = Math.abs(Math.sin((i + 1) * 12.9898) * 43758.5453) % 1;
-      const ry = Math.abs(Math.cos((i + 1) * 78.233) * 12345.678) % 1;
-      return { name, n, x: PAD + rx * (W - 2 * PAD), y: PAD + ry * (H - 2 * PAD), r: 5 + Math.min(n, 7) };
+    chapters.forEach((c) =>
+      c.repos.forEach((r) => r.stack.forEach((s) => count.set(s, (count.get(s) ?? 0) + 1))),
+    );
+    const list = [...count.entries()].sort((a, b) => b[1] - a[1]);
+    const N = list.length;
+    const cols = Math.ceil(Math.sqrt(N * (W / H)));
+    const rows = Math.ceil(N / cols);
+    const cw = W / cols;
+    const ch = H / rows;
+    return list.map(([name, n], i) => {
+      const col = i % cols;
+      const row = Math.floor(i / cols);
+      const jx = (rand(i + 1) - 0.5) * cw * 0.55;
+      const jy = (rand(i + 50) - 0.5) * ch * 0.55;
+      return {
+        name,
+        n,
+        x: col * cw + cw / 2 + jx,
+        y: row * ch + ch / 2 + jy,
+        r: 5 + Math.min(n, 6),
+      };
     });
   }, []);
 
@@ -48,47 +66,47 @@ export default function TechConstellation() {
   }, [nodes]);
 
   return (
-    <div>
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label={L ? "Bản đồ công nghệ" : "Tech map"}>
-        {edges.map((e, i) => (
-          <line
-            key={i}
-            x1={nodes[e.a].x}
-            y1={nodes[e.a].y}
-            x2={nodes[e.b].x}
-            y2={nodes[e.b].y}
-            stroke="var(--neon)"
-            strokeWidth={0.6}
-            opacity={0.16}
+    <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label={L ? "Bản đồ công nghệ" : "Tech map"}>
+      {edges.map((e, i) => (
+        <line
+          key={i}
+          x1={nodes[e.a].x}
+          y1={nodes[e.a].y}
+          x2={nodes[e.b].x}
+          y2={nodes[e.b].y}
+          stroke="var(--neon)"
+          strokeWidth={0.6}
+          opacity={0.14}
+        />
+      ))}
+      {nodes.map((nd) => (
+        <g
+          key={nd.name}
+          className="group cursor-pointer"
+          data-cursor
+          onClick={() => router.push(`/projects?tech=${encodeURIComponent(nd.name)}`)}
+        >
+          {/* vùng bấm rộng hơn cho dễ trúng + hover */}
+          <circle cx={nd.x} cy={nd.y} r={22} fill="transparent" />
+          <circle
+            cx={nd.x}
+            cy={nd.y}
+            r={nd.r}
+            fill="var(--neon)"
+            className="transition-all duration-200 group-hover:brightness-150"
+            style={{ filter: "drop-shadow(0 0 6px color-mix(in oklab, var(--neon) 55%, transparent))" }}
           />
-        ))}
-        {nodes.map((nd) => (
-          <g
-            key={nd.name}
-            className="cursor-pointer"
-            data-cursor
-            onClick={() => router.push(`/projects?tech=${encodeURIComponent(nd.name)}`)}
+          <text
+            x={nd.x}
+            y={nd.y - nd.r - 9}
+            textAnchor="middle"
+            style={{ fill: "var(--foreground)", fontSize: 14 }}
+            className="pointer-events-none font-mono uppercase opacity-0 transition-opacity duration-150 group-hover:opacity-100"
           >
-            <circle
-              cx={nd.x}
-              cy={nd.y}
-              r={nd.r}
-              fill="var(--neon)"
-              className="transition-all duration-200 hover:brightness-125"
-              style={{ filter: "drop-shadow(0 0 6px color-mix(in oklab, var(--neon) 55%, transparent))" }}
-            />
-            <text
-              x={nd.x}
-              y={nd.y - nd.r - 7}
-              textAnchor="middle"
-              style={{ fill: "var(--muted-foreground)", fontSize: 13 }}
-              className="pointer-events-none font-mono uppercase"
-            >
-              {nd.name}
-            </text>
-          </g>
-        ))}
-      </svg>
-    </div>
+            {nd.name}
+          </text>
+        </g>
+      ))}
+    </svg>
   );
 }
