@@ -8,6 +8,7 @@ const NeonCursor = dynamic(() => import("./NeonCursor"), { ssr: false });
 const CommandPalette = dynamic(() => import("./CommandPalette"), { ssr: false });
 const TerminalEasterEgg = dynamic(() => import("./TerminalEasterEgg"), { ssr: false });
 const BackToTop = dynamic(() => import("./BackToTop"), { ssr: false });
+const ReaderAchievement = dynamic(() => import("./ReaderAchievement"), { ssr: false });
 
 export default function ClientEnhancements() {
   return (
@@ -16,6 +17,7 @@ export default function ClientEnhancements() {
       <CommandPalette />
       <TerminalEasterEgg />
       <BackToTop />
+      <ReaderAchievement />
     </>
   );
 }
