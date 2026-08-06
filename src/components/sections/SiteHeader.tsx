@@ -30,6 +30,7 @@ export default function SiteHeader() {
   const links = [
     { href: "/", label: t("home") },
     { href: "/#chapters", label: t("chapters") },
+    { href: "/projects", label: t("projects") },
     { href: "/about", label: t("about") },
   ] as const;
 
