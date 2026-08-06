@@ -9,6 +9,7 @@ const CommandPalette = dynamic(() => import("./CommandPalette"), { ssr: false })
 const TerminalEasterEgg = dynamic(() => import("./TerminalEasterEgg"), { ssr: false });
 const BackToTop = dynamic(() => import("./BackToTop"), { ssr: false });
 const ReaderAchievement = dynamic(() => import("./ReaderAchievement"), { ssr: false });
+const ShortcutsHelp = dynamic(() => import("./ShortcutsHelp"), { ssr: false });
 
 export default function ClientEnhancements() {
   return (
@@ -18,6 +19,7 @@ export default function ClientEnhancements() {
       <TerminalEasterEgg />
       <BackToTop />
       <ReaderAchievement />
+      <ShortcutsHelp />
     </>
   );
 }

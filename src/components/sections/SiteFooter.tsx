@@ -31,7 +31,9 @@ export default async function SiteFooter() {
           {L ? "lệnh" : "commands"} ·{" "}
           <kbd className="rounded-[3px] border border-border px-1.5 py-0.5">`</kbd>{" "}
           terminal · <span className="tracking-widest">← →</span>{" "}
-          {L ? "chuyển chương" : "switch chapters"}
+          {L ? "chuyển chương" : "switch chapters"} ·{" "}
+          <kbd className="rounded-[3px] border border-border px-1.5 py-0.5">?</kbd>{" "}
+          {L ? "phím tắt" : "shortcuts"}
         </p>
         <p className="mt-3 font-mono text-xs text-muted-foreground">© {"2026"} · dev/journey</p>
       </div>
