@@ -2,20 +2,23 @@
 
 import { useMemo } from "react";
 import { useLocale } from "next-intl";
-import { useRouter } from "@/i18n/navigation";
 import { chapters } from "@/data/chapters";
 
-// Bản đồ công nghệ dạng chòm sao: chỉ lấy ~20 công nghệ dùng nhiều nhất cho
-// thoáng; chấm to theo số dự án, nối bằng đường rõ; nhãn hiện khi di chuột.
-// Bấm 1 sao -> /projects lọc theo tech đó.
+// Bản đồ công nghệ dạng chòm sao (~20 tech dùng nhiều nhất). Bấm 1 sao ->
+// gọi onSelect(tech). Sao đang chọn được làm nổi + luôn hiện nhãn.
 const W = 1000;
 const H = 560;
 const TOP = 20;
 const rand = (i: number) => Math.abs(Math.sin(i * 12.9898) * 43758.5453) % 1;
 
-export default function TechConstellation() {
+export default function TechConstellation({
+  onSelect,
+  active = null,
+}: {
+  onSelect: (tech: string) => void;
+  active?: string | null;
+}) {
   const L = useLocale() === "vi";
-  const router = useRouter();
 
   const nodes = useMemo(() => {
     const count = new Map<string, number>();
@@ -76,36 +79,55 @@ export default function TechConstellation() {
           y2={nodes[e.b].y}
           stroke="var(--neon)"
           strokeWidth={1.4}
-          opacity={0.32}
+          opacity={active ? 0.14 : 0.32}
         />
       ))}
-      {nodes.map((nd) => (
-        <g
-          key={nd.name}
-          className="group cursor-pointer"
-          data-cursor
-          onClick={() => router.push(`/projects?tech=${encodeURIComponent(nd.name)}`)}
-        >
-          <circle cx={nd.x} cy={nd.y} r={nd.r + 16} fill="transparent" />
-          <circle
-            cx={nd.x}
-            cy={nd.y}
-            r={nd.r}
-            fill="var(--neon)"
-            className="transition-all duration-200 group-hover:brightness-150"
-            style={{ filter: "drop-shadow(0 0 8px color-mix(in oklab, var(--neon) 60%, transparent))" }}
-          />
-          <text
-            x={nd.x}
-            y={nd.y - nd.r - 10}
-            textAnchor="middle"
-            style={{ fill: "var(--foreground)", fontSize: 15 }}
-            className="pointer-events-none font-mono uppercase opacity-0 transition-opacity duration-150 group-hover:opacity-100"
+      {nodes.map((nd) => {
+        const on = nd.name === active;
+        return (
+          <g
+            key={nd.name}
+            className="group cursor-pointer"
+            data-cursor
+            onClick={() => onSelect(nd.name)}
           >
-            {nd.name}
-          </text>
-        </g>
-      ))}
+            <circle cx={nd.x} cy={nd.y} r={nd.r + 16} fill="transparent" />
+            {on && (
+              <circle
+                cx={nd.x}
+                cy={nd.y}
+                r={nd.r + 7}
+                fill="none"
+                stroke="var(--neon)"
+                strokeWidth={1.5}
+                opacity={0.9}
+              />
+            )}
+            <circle
+              cx={nd.x}
+              cy={nd.y}
+              r={on ? nd.r * 1.25 : nd.r}
+              fill="var(--neon)"
+              className="transition-all duration-200 group-hover:brightness-150"
+              style={{
+                filter: "drop-shadow(0 0 8px color-mix(in oklab, var(--neon) 60%, transparent))",
+                opacity: active && !on ? 0.4 : 1,
+              }}
+            />
+            <text
+              x={nd.x}
+              y={nd.y - nd.r - 10}
+              textAnchor="middle"
+              style={{ fill: "var(--foreground)", fontSize: 15 }}
+              className={`pointer-events-none font-mono uppercase transition-opacity duration-150 ${
+                on ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+              }`}
+            >
+              {nd.name}
+            </text>
+          </g>
+        );
+      })}
     </svg>
   );
 }

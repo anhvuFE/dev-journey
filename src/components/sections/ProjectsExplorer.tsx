@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 
@@ -17,18 +17,14 @@ export interface Proj {
 
 export default function ProjectsExplorer({
   projects,
-  initialTech = null,
+  tech,
+  onTech,
 }: {
   projects: Proj[];
-  initialTech?: string | null;
+  tech: string | null;
+  onTech: (t: string | null) => void;
 }) {
   const L = useLocale() === "vi";
-  const [tech, setTech] = useState<string | null>(initialTech);
-
-  // Đồng bộ khi mở /projects?tech=… (vd bấm từ bản đồ công nghệ)
-  useEffect(() => {
-    setTech(initialTech);
-  }, [initialTech]);
   const [type, setType] = useState<"all" | "personal" | "client">("all");
 
   const techs = useMemo(() => {
@@ -63,14 +59,14 @@ export default function ProjectsExplorer({
       </div>
 
       <div className="mt-3 flex flex-wrap gap-2">
-        <button type="button" onClick={() => setTech(null)} className={chip(tech === null)}>
+        <button type="button" onClick={() => onTech(null)} className={chip(tech === null)}>
           {L ? "Mọi công nghệ" : "All tech"}
         </button>
         {techs.map((t) => (
           <button
             key={t}
             type="button"
-            onClick={() => setTech(t === tech ? null : t)}
+            onClick={() => onTech(t === tech ? null : t)}
             className={chip(tech === t)}
           >
             {t}
