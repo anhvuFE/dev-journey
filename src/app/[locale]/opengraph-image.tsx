@@ -1,34 +1,68 @@
 import { ImageResponse } from "next/og";
+import {
+  OG_SIZE,
+  OG_CONTENT_TYPE,
+  OgFrame,
+  FG,
+  MUTED,
+  NEON,
+  RULE,
+} from "@/lib/og";
 
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
+export const size = OG_SIZE;
+export const contentType = OG_CONTENT_TYPE;
+export const alt = "dev/journey — a real coding journey in 7 chapters";
 
-// OG image cho trang chủ. Dùng chữ Latin để tránh lỗi font dấu tiếng Việt.
+// OG trang chủ — phẳng, đen, neon. Chữ Latin để font mặc định render sạch.
 export default async function Image() {
   return new ImageResponse(
     (
-      <div
-        style={{
-          height: "100%",
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          padding: "80px",
-          background:
-            "radial-gradient(120% 120% at 0% 0%, #312e81 0%, #0b0b10 55%)",
-          color: "#f5f5f7",
-          fontFamily: "monospace",
-        }}
-      >
-        <div style={{ fontSize: 34, color: "#a5b4fc" }}>dev/journey</div>
-        <div style={{ fontSize: 76, fontWeight: 800, marginTop: 24, lineHeight: 1.1 }}>
-          From zero to full-stack
+      <OgFrame brand="dev/journey">
+        <div style={{ display: "flex", flexDirection: "column", zIndex: 1 }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              fontSize: 82,
+              fontWeight: 800,
+              lineHeight: 1.05,
+              letterSpacing: -1,
+              textTransform: "uppercase",
+              color: FG,
+            }}
+          >
+            <span>From zero to</span>
+            <span>
+              <span style={{ color: NEON }}>full-stack</span>
+            </span>
+          </div>
+          <div style={{ fontSize: 30, color: MUTED, marginTop: 26 }}>
+            A real coding journey, told in 7 chapters.
+          </div>
+
+          {/* Chân trang: handle + số liệu tóm tắt */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 20,
+              marginTop: 40,
+              paddingTop: 24,
+              borderTop: `1px solid ${RULE}`,
+              fontSize: 24,
+              color: MUTED,
+            }}
+          >
+            <span style={{ color: FG }}>@anhvuFE</span>
+            <span>·</span>
+            <span>7 chapters</span>
+            <span>·</span>
+            <span>4 years</span>
+            <span>·</span>
+            <span>60+ projects</span>
+          </div>
         </div>
-        <div style={{ fontSize: 32, color: "#9aa0ad", marginTop: 24 }}>
-          A real coding journey, told in 7 chapters
-        </div>
-      </div>
+      </OgFrame>
     ),
     { ...size },
   );

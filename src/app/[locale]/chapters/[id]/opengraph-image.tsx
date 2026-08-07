@@ -1,10 +1,20 @@
 import { ImageResponse } from "next/og";
 import { getChapter } from "@/data/chapters";
+import {
+  OG_SIZE,
+  OG_CONTENT_TYPE,
+  OgFrame,
+  FG,
+  MUTED,
+  NEON,
+  RULE,
+} from "@/lib/og";
 
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
+export const size = OG_SIZE;
+export const contentType = OG_CONTENT_TYPE;
 
-// OG image động cho từng chương (dùng tiêu đề tiếng Anh để an toàn font).
+// OG động cho từng chương — màu accent riêng của chương, phẳng, đen + neon.
+// Dùng tiêu đề tiếng Anh để font mặc định render an toàn (không dấu).
 export default async function Image({
   params,
 }: {
@@ -12,32 +22,69 @@ export default async function Image({
 }) {
   const { id } = await params;
   const chapter = getChapter(id);
-  const accent = chapter?.theme.accent ?? "#6366f1";
+  const accent = chapter?.theme.accent ?? NEON;
   const order = chapter ? String(chapter.order).padStart(2, "0") : "00";
+  const title = chapter?.title.en ?? "A coding journey";
+  const tagline = chapter?.tagline.en ?? "";
+  const repoCount = chapter?.repos.length ?? 0;
+
+  // Vài công nghệ tiêu biểu của chương (khử trùng lặp, tối đa 4).
+  const stack = chapter
+    ? [...new Set(chapter.repos.flatMap((r) => r.stack))].slice(0, 4)
+    : [];
 
   return new ImageResponse(
     (
-      <div
-        style={{
-          height: "100%",
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          padding: "80px",
-          background: `radial-gradient(120% 120% at 0% 0%, ${accent}55 0%, #0b0b10 55%)`,
-          color: "#f5f5f7",
-          fontFamily: "monospace",
-        }}
-      >
-        <div style={{ fontSize: 30, color: accent }}>dev/journey · chapter {order}</div>
-        <div style={{ fontSize: 72, fontWeight: 800, marginTop: 24, lineHeight: 1.1 }}>
-          {chapter?.title.en ?? "A coding journey"}
+      <OgFrame brand={`dev/journey · chapter ${order}`} accent={accent}>
+        <div style={{ display: "flex", flexDirection: "column", zIndex: 1 }}>
+          <div
+            style={{
+              fontSize: 74,
+              fontWeight: 800,
+              lineHeight: 1.06,
+              letterSpacing: -1,
+              textTransform: "uppercase",
+              color: FG,
+            }}
+          >
+            {title}
+          </div>
+          {tagline ? (
+            <div style={{ fontSize: 30, color: MUTED, marginTop: 24 }}>{tagline}</div>
+          ) : null}
+
+          {/* Chân trang: số dự án + stack */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              flexWrap: "wrap",
+              gap: 12,
+              marginTop: 40,
+              paddingTop: 24,
+              borderTop: `1px solid ${RULE}`,
+              fontSize: 22,
+              color: MUTED,
+            }}
+          >
+            <span style={{ color: accent }}>
+              {repoCount} {repoCount === 1 ? "project" : "projects"}
+            </span>
+            {stack.map((s) => (
+              <span
+                key={s}
+                style={{
+                  border: `1px solid ${RULE}`,
+                  padding: "4px 14px",
+                  color: FG,
+                }}
+              >
+                {s}
+              </span>
+            ))}
+          </div>
         </div>
-        <div style={{ fontSize: 30, color: "#9aa0ad", marginTop: 24 }}>
-          {chapter?.tagline.en ?? ""}
-        </div>
-      </div>
+      </OgFrame>
     ),
     { ...size },
   );
