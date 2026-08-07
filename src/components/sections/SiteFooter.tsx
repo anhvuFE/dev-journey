@@ -24,6 +24,9 @@ export default async function SiteFooter() {
           <Link href="/cv" className="transition-colors hover:text-foreground">
             {L ? "CV / Hồ sơ" : "CV / Résumé"}
           </Link>
+          <Link href="/journey" className="transition-colors hover:text-foreground">
+            {L ? "Bản đồ hành trình" : "Journey map"}
+          </Link>
           <Link href="/guestbook" className="transition-colors hover:text-foreground">
             {L ? "Sổ lưu bút" : "Guestbook"}
           </Link>
