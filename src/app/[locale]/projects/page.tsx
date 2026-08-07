@@ -5,8 +5,8 @@ import { Link } from "@/i18n/navigation";
 import { chapters } from "@/data/chapters";
 import { pageMetadata } from "@/lib/seo";
 import ConstellationBg from "@/components/ConstellationBg";
-import ProjectsExplorer, { type Proj } from "@/components/sections/ProjectsExplorer";
-import TechConstellation from "@/components/sections/TechConstellation";
+import type { Proj } from "@/components/sections/ProjectsExplorer";
+import ProjectsView from "@/components/sections/ProjectsView";
 
 type Locale = "vi" | "en";
 
@@ -83,18 +83,7 @@ export default async function ProjectsPage({
           </p>
         </header>
 
-        <div className="mt-10">
-          <p className="font-mono text-xs uppercase tracking-[0.25em] text-accent-c">
-            {L ? "Bản đồ công nghệ · di chuột xem tên · bấm để lọc" : "Tech map · hover for name · tap to filter"}
-          </p>
-          <div className="mt-4">
-            <TechConstellation />
-          </div>
-        </div>
-
-        <div className="mt-10">
-          <ProjectsExplorer projects={projects} initialTech={tech ?? null} />
-        </div>
+        <ProjectsView projects={projects} initialTech={tech ?? null} />
       </div>
     </div>
   );
