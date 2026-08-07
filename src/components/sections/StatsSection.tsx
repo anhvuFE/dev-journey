@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { getLocale } from "next-intl/server";
 import { stats } from "@/data/stats";
 import CountUp from "@/components/CountUp";
@@ -5,6 +6,7 @@ import GitHubGraph from "@/components/GitHubGraph";
 import TechBars from "@/components/sections/TechBars";
 import TechDonut from "@/components/sections/TechDonut";
 import GitHubStreak from "@/components/sections/GitHubStreak";
+import LiveGitHubStrip from "@/components/sections/LiveGitHubStrip";
 
 export default async function StatsSection() {
   const locale = (await getLocale()) as "vi" | "en";
@@ -34,6 +36,15 @@ export default async function StatsSection() {
           </div>
         ))}
       </div>
+
+      {/* Dải số liệu GitHub công khai cập nhật trực tiếp (stream, cache 6h) */}
+      <Suspense
+        fallback={
+          <div className="mt-6 h-[132px] w-full animate-pulse border border-border bg-white/[0.03]" />
+        }
+      >
+        <LiveGitHubStrip username={stats.githubUser} locale={locale} />
+      </Suspense>
 
       <div className="mt-14 grid gap-12 md:grid-cols-2">
         {/* Bar công nghệ + vòng tỉ trọng */}
